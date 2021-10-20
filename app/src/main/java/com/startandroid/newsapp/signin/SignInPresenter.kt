@@ -18,11 +18,12 @@ Client ID
 
 Client Secret
     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
- */
+*/
 
 class SignInPresenter(signInFragment: SignInFragment) : SignInContract.Presenter {
 
     private lateinit var view: SignInContract.View
+    private lateinit var upView: SignInContract.View
 
     lateinit var preferences: SharedPreferences
     lateinit var signInClient: GoogleSignInClient
