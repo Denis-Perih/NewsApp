@@ -6,4 +6,6 @@ interface MainContract {
 
     fun openSignInFragment()
 
+    fun noNetConnected()
+
 }

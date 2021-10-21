@@ -51,7 +51,7 @@ class SignInFragment : Fragment(), SignInContract.View {
     }
 
     override fun startActivitySignIn(intent: Intent) {
-        activity?.startActivityForResult(intent, NEWS_SIGN_IN)
+        requireActivity().startActivityForResult(intent, NEWS_SIGN_IN)
     }
 
     override fun showSnackBar(text: String) {

@@ -1,6 +1,7 @@
 package com.startandroid.newsapp.main
 
 import android.content.Context
+import android.content.Intent
 import android.net.ConnectivityManager
 import android.os.Build
 import android.os.Bundle
@@ -15,6 +16,7 @@ import com.startandroid.newsapp.R
 import com.startandroid.newsapp.home.HomeFragment
 import com.startandroid.newsapp.signin.SignInFragment
 import com.startandroid.newsapp.splash.SplashFragment
+
 
 @RequiresApi(Build.VERSION_CODES.M)
 class MainActivity : AppCompatActivity(), MainContract {
@@ -40,7 +42,13 @@ class MainActivity : AppCompatActivity(), MainContract {
         startApp()
     }
 
-    fun isNetConnected(): Boolean {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        val currentFragment = supportFragmentManager.findFragmentById(R.id.mainFragmentContainer)
+        currentFragment?.onActivityResult(requestCode, resultCode, data)
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    private fun isNetConnected(): Boolean {
         val connectManager =
             baseContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         if (connectManager != null) {
@@ -62,7 +70,7 @@ class MainActivity : AppCompatActivity(), MainContract {
         srlNoNetConnection.visibility = View.VISIBLE
     }
 
-    fun openFragment(newFragment: Fragment) {
+    private fun openFragment(newFragment: Fragment) {
         val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
             .setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
             .replace(R.id.mainFragmentContainer, newFragment)
@@ -77,6 +85,11 @@ class MainActivity : AppCompatActivity(), MainContract {
 
     override fun openSignInFragment() {
         openFragment(SignInFragment())
+    }
+
+    override fun noNetConnected() {
+        mainFragmentContainer.visibility = View.INVISIBLE
+        srlNoNetConnection.visibility = View.VISIBLE
     }
 
 

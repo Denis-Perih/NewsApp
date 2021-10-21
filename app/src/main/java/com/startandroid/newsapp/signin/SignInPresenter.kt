@@ -11,6 +11,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
+import com.startandroid.newsapp.data.NewsRepositoryImpl
 
 /*
 Client ID
@@ -20,13 +21,11 @@ Client Secret
     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
 */
 
-class SignInPresenter(signInFragment: SignInFragment) : SignInContract.Presenter {
-
-    private lateinit var view: SignInContract.View
-    private lateinit var upView: SignInContract.View
+class SignInPresenter(private val view: SignInContract.View) : SignInContract.Presenter {
 
     lateinit var preferences: SharedPreferences
     lateinit var signInClient: GoogleSignInClient
+    val newsRepository = NewsRepositoryImpl()
 
     companion object {
         const val PREFERENCES_KEY = "news_name"
@@ -42,16 +41,15 @@ class SignInPresenter(signInFragment: SignInFragment) : SignInContract.Presenter
     }
 
     override fun setGoogleAuth(activity: Activity) {
-
-        val gso: GoogleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestEmail()
-            .build()
+        val gso: GoogleSignInOptions =
+            GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build()
 
         signInClient = GoogleSignIn.getClient(activity, gso)
     }
 
     override fun onLoginClickedGoogle() {
-        Log.d("LOG", "onLoginClickedGoogle: "+::signInClient.isInitialized)
         view.startActivitySignIn(signInClient.signInIntent)
     }
 
@@ -59,7 +57,6 @@ class SignInPresenter(signInFragment: SignInFragment) : SignInContract.Presenter
         if (requestCode == NEWS_SIGN_IN) {
             val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
-                val account: GoogleSignInAccount = task.getResult(ApiException::class.java)
                 view.isSuccessAuthGoogle()
             } catch (e: ApiException) {
                 view.showSnackBar(e.toString())
