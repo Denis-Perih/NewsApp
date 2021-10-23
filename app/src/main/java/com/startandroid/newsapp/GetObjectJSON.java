@@ -3,9 +3,7 @@ package com.startandroid.newsapp;
 import androidx.annotation.NonNull;
 
 import com.startandroid.newsapp.data.entity.News;
-import com.startandroid.newsapp.network.NetworkServiceTab1;
-
-import java.util.List;
+import com.startandroid.newsapp.ui.network.NetworkServiceTabOneTwo;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
@@ -16,7 +14,7 @@ public class GetObjectJSON {
     public void objectJSON(){
 
         String apiKey = "AX61V3XwAl1cpB4ZM04aSr5Ae7Ax4SGF";
-        NetworkServiceTab1.INSTANCE
+        NetworkServiceTabOneTwo.INSTANCE
                 .getJSONApi()
                 .getNews(apiKey)
                 .subscribeOn(Schedulers.io())
