@@ -1,4 +1,4 @@
-package com.startandroid.newsapp.signin
+package com.startandroid.newsapp.ui.signin
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,9 +9,10 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.material.snackbar.Snackbar
 import com.startandroid.newsapp.R
-import com.startandroid.newsapp.main.MainContract
+import com.startandroid.newsapp.ui.main.MainContract
 
 class SignInFragment : Fragment(), SignInContract.View {
 
@@ -51,14 +52,14 @@ class SignInFragment : Fragment(), SignInContract.View {
     }
 
     override fun startActivitySignIn(intent: Intent) {
-        activity?.startActivityForResult(intent, NEWS_SIGN_IN)
+        requireActivity().startActivityForResult(intent, NEWS_SIGN_IN)
     }
 
     override fun showSnackBar(text: String) {
         Snackbar.make(clFragmentLoginScreen, text, Snackbar.LENGTH_SHORT).show()
     }
 
-    override fun isSuccessAuthGoogle() {
+    override fun isSuccessAuthGoogle(account: GoogleSignInAccount) {
         (requireActivity() as MainContract).openHomeFragment()
     }
 

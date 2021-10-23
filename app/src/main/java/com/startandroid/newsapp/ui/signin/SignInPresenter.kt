@@ -1,10 +1,9 @@
-package com.startandroid.newsapp.signin
+package com.startandroid.newsapp.ui.signin
 
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.util.Log
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -18,11 +17,9 @@ Client ID
 
 Client Secret
     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
- */
+*/
 
-class SignInPresenter(signInFragment: SignInFragment) : SignInContract.Presenter {
-
-    private lateinit var view: SignInContract.View
+class SignInPresenter(private val view: SignInContract.View) : SignInContract.Presenter {
 
     lateinit var preferences: SharedPreferences
     lateinit var signInClient: GoogleSignInClient
@@ -41,16 +38,15 @@ class SignInPresenter(signInFragment: SignInFragment) : SignInContract.Presenter
     }
 
     override fun setGoogleAuth(activity: Activity) {
-
-        val gso: GoogleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestEmail()
-            .build()
+        val gso: GoogleSignInOptions =
+            GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build()
 
         signInClient = GoogleSignIn.getClient(activity, gso)
     }
 
     override fun onLoginClickedGoogle() {
-        Log.d("LOG", "onLoginClickedGoogle: "+::signInClient.isInitialized)
         view.startActivitySignIn(signInClient.signInIntent)
     }
 
@@ -59,7 +55,7 @@ class SignInPresenter(signInFragment: SignInFragment) : SignInContract.Presenter
             val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
                 val account: GoogleSignInAccount = task.getResult(ApiException::class.java)
-                view.isSuccessAuthGoogle()
+                view.isSuccessAuthGoogle(account)
             } catch (e: ApiException) {
                 view.showSnackBar(e.toString())
             }

@@ -1,4 +1,4 @@
-package com.startandroid.newsapp.splash
+package com.startandroid.newsapp.ui.splash
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,7 +10,7 @@ import android.widget.Button
 import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import com.startandroid.newsapp.R
-import com.startandroid.newsapp.main.MainContract
+import com.startandroid.newsapp.ui.main.MainContract
 
 class SplashFragment : Fragment() {
 

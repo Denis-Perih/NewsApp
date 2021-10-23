@@ -1,8 +1,9 @@
-package com.startandroid.newsapp.signin
+package com.startandroid.newsapp.ui.signin
 
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 
 interface SignInContract {
 
@@ -12,7 +13,7 @@ interface SignInContract {
 
         fun showSnackBar(text: String)
 
-        fun isSuccessAuthGoogle()
+        fun isSuccessAuthGoogle(account: GoogleSignInAccount)
     }
 
     interface Presenter {

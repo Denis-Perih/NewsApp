@@ -9,4 +9,7 @@
     <string name="enter">enter</string>
     <string name="or">or</string>
     <string name="continue_with_google">Continue with Google</string>
+    <string name="most_popular">Most Popular</string>
+    <string name="top_stories">Top Stories</string>
+    <string name="back">back</string>
 </resources>

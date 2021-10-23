@@ -12,8 +12,17 @@
         <entry key="app/src/main/res/drawable/style_btn_splash.xml" value="0.2" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.275" />
         <entry key="app/src/main/res/layout/fr_home_screen.xml" value="0.22361111111111112" />
+        <entry key="app/src/main/res/layout/fr_more_screen.xml" value="0.177734375" />
         <entry key="app/src/main/res/layout/fr_sign_in_screen.xml" value="0.20285565616993106" />
         <entry key="app/src/main/res/layout/fr_splash_screen.xml" value="0.165" />
+        <entry key="app/src/main/res/layout/fr_tab1.xml" value="0.177734375" />
+        <entry key="app/src/main/res/layout/fr_tab2.xml" value="0.177734375" />
+        <entry key="app/src/main/res/layout/fr_tab3.xml" value="0.177734375" />
+        <entry key="app/src/main/res/layout/item_tab1.xml" value="0.177734375" />
+        <entry key="app/src/main/res/layout/item_tab_1.xml" value="0.177734375" />
+        <entry key="app/src/main/res/layout/item_tab_1_2.xml" value="0.21691225000120953" />
+        <entry key="app/src/main/res/layout/item_tab_2.xml" value="0.177734375" />
+        <entry key="app/src/main/res/layout/more_tab_1.xml" value="0.1986111111111111" />
       </map>
     </option>
   </component>
