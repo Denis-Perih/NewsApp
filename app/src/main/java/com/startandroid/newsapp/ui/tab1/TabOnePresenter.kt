@@ -17,6 +17,9 @@ import io.reactivex.schedulers.Schedulers
 
 class TabOnePresenter(private val view: TabOneContract.View): TabOneContract.Presenter, AnswerForMoreDetailsTab1 {
 
+
+    lateinit var test: String
+
     lateinit var rvAdapterTab1: RecyclerViewAdapterTab1
 
     private val repository: NewsRepository = NewsRepositoryImpl()
