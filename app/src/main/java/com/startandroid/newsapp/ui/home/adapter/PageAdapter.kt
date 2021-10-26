@@ -3,9 +3,9 @@ package com.startandroid.newsapp.ui.home.adapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import com.startandroid.newsapp.ui.tab1.TabOneFragment
-import com.startandroid.newsapp.ui.tab2.TabTwoFragment
-import com.startandroid.newsapp.ui.tab3.TabThreeFragment
+import com.startandroid.newsapp.ui.mostpopular.view.MostPopularFragment
+import com.startandroid.newsapp.ui.topstories.view.TopStoriesFragment
+import com.startandroid.newsapp.ui.historystock.TabThreeFragment
 
 class PageAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {
 
@@ -18,16 +18,16 @@ class PageAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(fragm
     override fun getItem(position: Int): Fragment {
         when(position) {
             0 -> {
-                return TabOneFragment()
+                return MostPopularFragment()
             }
             1 -> {
-                return TabTwoFragment()
+                return TopStoriesFragment()
             }
             2 -> {
                 return TabThreeFragment()
             }
             else -> {
-                return TabOneFragment()
+                return MostPopularFragment()
             }
         }
     }

@@ -1,4 +1,4 @@
-package com.startandroid.newsapp.ui.tab3
+package com.startandroid.newsapp.ui.historystock
 
 import android.os.Bundle
 import android.view.LayoutInflater

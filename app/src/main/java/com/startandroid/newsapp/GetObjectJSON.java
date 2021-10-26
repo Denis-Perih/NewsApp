@@ -2,8 +2,8 @@ package com.startandroid.newsapp;
 
 import androidx.annotation.NonNull;
 
-import com.startandroid.newsapp.data.entity.News;
-import com.startandroid.newsapp.ui.network.NetworkServiceTabOneTwo;
+import com.startandroid.newsapp.data.model.PopularNews;
+import com.startandroid.newsapp.data.api.network.NetworkServiceTabOneTwo;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.observers.DisposableSingleObserver;
@@ -19,10 +19,10 @@ public class GetObjectJSON {
                 .getNews(apiKey)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new DisposableSingleObserver<News>() {
+                .subscribe(new DisposableSingleObserver<PopularNews>() {
 
                     @Override
-                    public void onSuccess(@NonNull News news) {
+                    public void onSuccess(@NonNull PopularNews popularNews) {
 
                     }
 

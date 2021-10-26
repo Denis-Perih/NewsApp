@@ -1,17 +1,16 @@
-package com.startandroid.newsapp.data.entity
+package com.startandroid.newsapp.data.model
 
-import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
-data class News(
+data class PopularNews(
     @SerializedName("results")
-    val results: List<NewsItem>
+    val results: List<PopularNewsItem>
 )
 
 @Parcelize
-data class NewsItem(
+data class PopularNewsItem(
     @SerializedName("id")
     val id: Long,
 

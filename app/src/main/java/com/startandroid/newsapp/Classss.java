@@ -38,7 +38,7 @@ public class Classss extends Fragment {
 
         ((MainContract) requireActivity()).openHomeFragment();
 
-        View v = inflater.inflate(R.layout.fr_tab1, container, false);
+        View v = inflater.inflate(R.layout.fr_most_popular, container, false);
 
         Intent data = new Intent();
         Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);

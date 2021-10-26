@@ -1,4 +1,4 @@
-package com.startandroid.newsapp.ui.network
+package com.startandroid.newsapp.data.api.network
 
 import retrofit2.Retrofit
 import okhttp3.logging.HttpLoggingInterceptor

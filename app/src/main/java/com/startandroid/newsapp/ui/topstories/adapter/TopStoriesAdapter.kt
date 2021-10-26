@@ -1,4 +1,4 @@
-package com.startandroid.newsapp.ui.tab2.adapter
+package com.startandroid.newsapp.ui.topstories.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,12 +7,13 @@ import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.startandroid.newsapp.R
-import com.startandroid.newsapp.data.entity.StoriesItem
-import com.startandroid.newsapp.ui.tab2.AnswerForMoreDetailsTab2
+import com.startandroid.newsapp.data.model.StoriesNews
+import com.startandroid.newsapp.data.model.StoriesNewsItem
+import com.startandroid.newsapp.ui.topstories.ItemForTopStories
 
-class RecyclerViewAdapterTab2(private val blockNewsData: List<StoriesItem>,
-                              private val answerMoreTab2: AnswerForMoreDetailsTab2
-) : RecyclerView.Adapter<RecyclerViewAdapterTab2.ViewHolder>() {
+class TopStoriesAdapter(private var blockNewsData: List<StoriesNewsItem>,
+                              private val itemForTopStories: ItemForTopStories
+) : RecyclerView.Adapter<TopStoriesAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvTitleItem: TextView
@@ -35,7 +36,7 @@ class RecyclerViewAdapterTab2(private val blockNewsData: List<StoriesItem>,
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.cvItemTabTwo.setOnClickListener {
             // add answer for details
-            answerMoreTab2.onSuccessMoreDetails(blockNewsData.get(position))
+            itemForTopStories.openItemMoreDetails(blockNewsData.get(position))
         }
         setDataToCard(holder, position)
     }
@@ -49,4 +50,7 @@ class RecyclerViewAdapterTab2(private val blockNewsData: List<StoriesItem>,
         return blockNewsData.size
     }
 
+    fun addData(storiesNews: StoriesNews) {
+        blockNewsData = storiesNews.results
+    }
 }
