@@ -2,16 +2,11 @@ package com.startandroid.newsapp.ui.mostpopular.view
 
 import android.content.Context
 import android.net.ConnectivityManager
-import android.os.AsyncTask
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.text.PrecomputedTextCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -21,11 +16,11 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.startandroid.newsapp.R
 import com.startandroid.newsapp.data.model.PopularNewsItem
 import com.startandroid.newsapp.ui.main.MainContract
-import com.startandroid.newsapp.ui.more.MoreItemFragment
 import com.startandroid.newsapp.ui.mostpopular.ItemForMostPopular
 import com.startandroid.newsapp.ui.mostpopular.adapter.MostPopularAdapter
 import com.startandroid.newsapp.ui.mostpopular.factory.MostPopularViewModelFactory
 import com.startandroid.newsapp.ui.mostpopular.viewmodel.MostPopularViewModel
+import com.startandroid.newsapp.ui.topstories.view.TopStoriesFragment
 import com.startandroid.newsapp.utils.Status
 
 class MostPopularFragment : Fragment(), ItemForMostPopular {
@@ -67,7 +62,7 @@ class MostPopularFragment : Fragment(), ItemForMostPopular {
         rvListMostPopular = oneView.findViewById(R.id.rvListMostPopular)
         val layoutManager = LinearLayoutManager(rvListMostPopular.context, RecyclerView.VERTICAL, false)
         rvListMostPopular.layoutManager = layoutManager
-        mostPopularAdapter = MostPopularAdapter(arrayListOf(), MostPopularFragment())
+        mostPopularAdapter = MostPopularAdapter(arrayListOf(), this)
         rvListMostPopular.addItemDecoration(
             DividerItemDecoration(
                 rvListMostPopular.context,

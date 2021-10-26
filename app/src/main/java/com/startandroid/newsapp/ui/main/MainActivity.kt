@@ -18,7 +18,7 @@ import com.startandroid.newsapp.data.model.StoriesNewsItem
 import com.startandroid.newsapp.ui.home.HomeFragment
 import com.startandroid.newsapp.ui.home.IOnBackPressed
 import com.startandroid.newsapp.ui.more.MoreItemFragment
-import com.startandroid.newsapp.ui.signin.SignInFragment
+import com.startandroid.newsapp.ui.signin.view.SignInFragment
 import com.startandroid.newsapp.ui.splash.SplashFragment
 
 @RequiresApi(Build.VERSION_CODES.M)
@@ -49,6 +49,7 @@ class MainActivity : AppCompatActivity(), MainContract {
         val fragment = supportFragmentManager.findFragmentById(R.id.mainFragmentContainer)
         if (fragment !is IOnBackPressed || !(fragment as IOnBackPressed).onBackPressed()) {
             super.onBackPressed()
+
         }
     }
 
@@ -83,8 +84,8 @@ class MainActivity : AppCompatActivity(), MainContract {
     private fun openFragment(newFragment: Fragment) {
         val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
             .setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
-            .replace(R.id.mainFragmentContainer, newFragment)
-            .addToBackStack(newFragment::class.simpleName)
+            .replace(R.id.mainFragmentContainer, newFragment, newFragment::class.java.simpleName)
+            .addToBackStack(newFragment::class.java.simpleName)
 
         transaction.commit()
     }

@@ -16,7 +16,6 @@ class MostPopularViewModel(private val repository: NewsRepository) : ViewModel()
 
     private val mostPopularLiveData = MutableLiveData<Result<PopularNews>>()
     private val mostPopularLiveDataNet = MutableLiveData<String>()
-    private val mostPopularLiveDataItemNews = MutableLiveData<PopularNewsItem>()
     private val compositeDisposable = CompositeDisposable()
 
     init {
@@ -46,10 +45,6 @@ class MostPopularViewModel(private val repository: NewsRepository) : ViewModel()
 
     fun getMostPopularNet() : LiveData<String> {
         return mostPopularLiveDataNet
-    }
-
-    fun getMostPopularItemMore() : LiveData<PopularNewsItem> {
-        return mostPopularLiveDataItemNews
     }
 
     override fun onCleared() {

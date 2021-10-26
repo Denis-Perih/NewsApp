@@ -61,7 +61,7 @@ class TopStoriesFragment : Fragment(), ItemForTopStories {
         rvListTopStories = twoView.findViewById(R.id.rvListTopStories)
         val layoutManager = LinearLayoutManager(rvListTopStories.context, RecyclerView.VERTICAL, false)
         rvListTopStories.layoutManager = layoutManager
-        topStoriesAdapter = TopStoriesAdapter(arrayListOf(), TopStoriesFragment())
+        topStoriesAdapter = TopStoriesAdapter(arrayListOf(), this)
         rvListTopStories.addItemDecoration(
             DividerItemDecoration(
                 rvListTopStories.context,

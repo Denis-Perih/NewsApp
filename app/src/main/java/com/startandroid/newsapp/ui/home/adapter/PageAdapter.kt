@@ -9,25 +9,23 @@ import com.startandroid.newsapp.ui.historystock.TabThreeFragment
 
 class PageAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {
 
-
-
     override fun getCount(): Int {
         return 3
     }
 
     override fun getItem(position: Int): Fragment {
-        when(position) {
+        return when(position) {
             0 -> {
-                return MostPopularFragment()
+                MostPopularFragment()
             }
             1 -> {
-                return TopStoriesFragment()
+                TopStoriesFragment()
             }
             2 -> {
-                return TabThreeFragment()
+                TabThreeFragment()
             }
             else -> {
-                return MostPopularFragment()
+                MostPopularFragment()
             }
         }
     }

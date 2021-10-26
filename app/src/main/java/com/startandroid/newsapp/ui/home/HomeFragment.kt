@@ -10,7 +10,9 @@ import com.google.android.material.tabs.TabLayout
 import com.startandroid.newsapp.R
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
+import com.startandroid.newsapp.data.model.PopularNewsItem
 import com.startandroid.newsapp.ui.home.adapter.PageAdapter
+import com.startandroid.newsapp.ui.main.MainContract
 
 
 class HomeFragment : Fragment(), IOnBackPressed {
@@ -41,5 +43,4 @@ class HomeFragment : Fragment(), IOnBackPressed {
         }
         return true
     }
-
 }
