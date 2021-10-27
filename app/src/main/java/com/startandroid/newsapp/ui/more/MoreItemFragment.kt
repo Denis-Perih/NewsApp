@@ -47,11 +47,11 @@ class MoreItemFragment : Fragment() {
             val storiesItem: StoriesNewsItem? = bundle.getParcelable("storiesNewsItem")
             if (popularNewsItem == null) {
                 tvTitleMore.text = storiesItem?.title
-                tvDateMore.text = storiesItem?.published_date
+                tvDateMore.text = storiesItem?.published_date?.substring(0, 10)
                 tvAbstract.text = storiesItem?.abstract
             } else {
                 tvTitleMore.text = popularNewsItem.title
-                tvDateMore.text = popularNewsItem.published_date
+                tvDateMore.text = popularNewsItem.published_date?.substring(0, 10)
                 tvAbstract.text = popularNewsItem.abstract
             }
         }

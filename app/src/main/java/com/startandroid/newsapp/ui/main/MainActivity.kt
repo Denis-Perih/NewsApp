@@ -49,7 +49,6 @@ class MainActivity : AppCompatActivity(), MainContract {
         val fragment = supportFragmentManager.findFragmentById(R.id.mainFragmentContainer)
         if (fragment !is IOnBackPressed || !(fragment as IOnBackPressed).onBackPressed()) {
             super.onBackPressed()
-
         }
     }
 
