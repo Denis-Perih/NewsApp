@@ -3,25 +3,18 @@ package com.startandroid.newsapp.ui.historystock.view
 import android.content.Context
 import android.net.ConnectivityManager
 import android.os.Bundle
-import android.os.CountDownTimer
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.lifecycle.Observer
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.startandroid.newsapp.R
-import com.startandroid.newsapp.data.model.HistoryStock
 import com.startandroid.newsapp.data.model.HistoryStockItem
-import com.startandroid.newsapp.data.model.PopularNewsItem
 import com.startandroid.newsapp.ui.historystock.factory.HistoryStockViewModelFactory
 import com.startandroid.newsapp.ui.historystock.viewmodel.HistoryStockViewModel
 import com.startandroid.newsapp.utils.Status
-import java.text.SimpleDateFormat
-import java.util.*
 
 class HistoryStockFragment : Fragment() {
 
