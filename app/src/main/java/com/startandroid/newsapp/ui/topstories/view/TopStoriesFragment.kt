@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -39,7 +38,7 @@ class TopStoriesFragment : Fragment(), ItemForTopStories {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        twoView = inflater.inflate(R.layout.fr_tab2, container, false)
+        twoView = inflater.inflate(R.layout.fr_top_stories, container, false)
 
         setupUI()
         setupViewModel()

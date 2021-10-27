@@ -16,7 +16,7 @@ public class GetObjectJSON {
         String apiKey = "AX61V3XwAl1cpB4ZM04aSr5Ae7Ax4SGF";
         NetworkServiceTabOneTwo.INSTANCE
                 .getJSONApi()
-                .getNews(apiKey)
+                .getMostPopular(apiKey)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new DisposableSingleObserver<PopularNews>() {

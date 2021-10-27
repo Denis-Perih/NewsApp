@@ -5,7 +5,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import com.startandroid.newsapp.ui.mostpopular.view.MostPopularFragment
 import com.startandroid.newsapp.ui.topstories.view.TopStoriesFragment
-import com.startandroid.newsapp.ui.historystock.TabThreeFragment
+import com.startandroid.newsapp.ui.historystock.view.HistoryStockFragment
 
 class PageAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(fragmentManager) {
 
@@ -22,7 +22,7 @@ class PageAdapter(fragmentManager: FragmentManager) : FragmentPagerAdapter(fragm
                 TopStoriesFragment()
             }
             2 -> {
-                TabThreeFragment()
+                HistoryStockFragment()
             }
             else -> {
                 MostPopularFragment()

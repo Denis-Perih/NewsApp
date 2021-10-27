@@ -1,13 +1,18 @@
 package com.startandroid.newsapp.data.repository
 
-import android.content.Context
 import android.net.ConnectivityManager
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
+import com.startandroid.newsapp.data.api.network.NetworkServiceHistory
 import com.startandroid.newsapp.data.api.network.NetworkServiceTabOneTwo
+import com.startandroid.newsapp.data.model.HistoryStock
 import com.startandroid.newsapp.data.model.PopularNews
 import com.startandroid.newsapp.data.model.StoriesNews
+import com.startandroid.newsapp.utils.Result
 import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
 class NewsRepositoryImpl(private val connectivityManager: ConnectivityManager) : NewsRepository {
 
@@ -17,7 +22,7 @@ class NewsRepositoryImpl(private val connectivityManager: ConnectivityManager) :
 
         return NetworkServiceTabOneTwo
             .getJSONApi()
-            .getNews(apiKey)
+            .getMostPopular(apiKey)
     }
 
     override fun getTopStories(): Single<StoriesNews> {
@@ -36,5 +41,19 @@ class NewsRepositoryImpl(private val connectivityManager: ConnectivityManager) :
             }
         }
         return false
+    }
+
+    override fun getHistoryStock(start_date: String, end_date: String): Single<HistoryStock> {
+        val ivel = NetworkServiceHistory
+            .getJSONApi().getHistoryStock(start_date, end_date)
+        Log.d("TAG_DATA", "getHistoryStock.date_has: " + start_date +  " | " + end_date)
+        Log.d("TAG_DATA", "getHistoryStock: " + ivel.subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ stories ->
+                Log.d("TAG_DATA", "get.setupObserver: " + stories.data)
+            }, { throwable ->
+                Log.d("TAG_DATA", "setupObserver: " + null)
+            }))
+        return ivel
     }
 }

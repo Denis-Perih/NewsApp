@@ -21,7 +21,7 @@ Client Secret
 
 class SignInViewModel() : ViewModel() {
 
-    private val accountLiveData = MutableLiveData<Result<GoogleSignInAccount>>()
+    private val accountLiveData = MutableLiveData<Result<String>>()
     private val gsoLiveData = MutableLiveData<Result<GoogleSignInOptions>>()
     private lateinit var gso: GoogleSignInOptions
 
@@ -48,15 +48,15 @@ class SignInViewModel() : ViewModel() {
         if (requestCode == NEWS_SIGN_IN) {
             val task: Task<GoogleSignInAccount> = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
-                val account: GoogleSignInAccount = task.getResult(ApiException::class.java)
-                accountLiveData.postValue(Result.successData(account))
+//                val account: GoogleSignInAccount = task.getResult(ApiException::class.java)
+                accountLiveData.postValue(Result.successData("account"))
             } catch (e: ApiException) {
                 accountLiveData.postValue(Result.errorData(null))
             }
         }
     }
 
-    fun getGoogleAccount() : LiveData<Result<GoogleSignInAccount>> {
+    fun getGoogleAccount() : LiveData<Result<String>> {
         return accountLiveData
     }
 }

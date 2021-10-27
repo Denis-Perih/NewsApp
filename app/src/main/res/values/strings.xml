@@ -12,4 +12,10 @@
     <string name="most_popular">Most Popular</string>
     <string name="top_stories">Top Stories</string>
     <string name="back">back</string>
+    <string name="history_stock">History Stock</string>
+    <string name="date">Date:</string>
+    <string name="open">Open:</string>
+    <string name="high">High:</string>
+    <string name="low">Low:</string>
+    <string name="close">Close:</string>
 </resources>

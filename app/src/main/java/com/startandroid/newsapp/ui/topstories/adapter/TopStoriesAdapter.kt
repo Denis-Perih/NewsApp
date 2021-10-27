@@ -29,7 +29,7 @@ class TopStoriesAdapter(private var blockNewsData: List<StoriesNewsItem>,
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val v: View =
-            LayoutInflater.from(parent.context).inflate(R.layout.item_tab_2, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.item_top_stories, parent, false)
         return ViewHolder(v)
     }
 

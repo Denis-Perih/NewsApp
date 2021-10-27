@@ -29,7 +29,7 @@ class MostPopularAdapter(private var blockNewsData: List<PopularNewsItem>,
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val v: View = LayoutInflater.from(parent.context).inflate(R.layout.item_tab_1, parent, false)
+        val v: View = LayoutInflater.from(parent.context).inflate(R.layout.item_most_popular, parent, false)
         return ViewHolder(v)
     }
 
