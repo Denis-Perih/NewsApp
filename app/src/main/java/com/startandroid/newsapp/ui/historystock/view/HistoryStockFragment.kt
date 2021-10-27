@@ -74,7 +74,6 @@ class HistoryStockFragment : Fragment() {
             when(it.status) {
                 Status.SUCCESS -> {
                     it.data?.let { it1 -> updateData(it1) }
-//                    Log.d("TAG_DATA", "setupObserver: " + it.data)
                 }
                 Status.ERROR -> {
                     // error UI
@@ -84,10 +83,12 @@ class HistoryStockFragment : Fragment() {
     }
 
     private fun updateData(data: HistoryStockItem) {
-        tvDateValue.text = data?.date
-        tvOpenValue.text = data?.open.toString()
-        tvHighValue.text = data?.high.toString()
-        tvLowValue.text = data?.low.toString()
-        tvCloseValue.text = data?.close.toString()
+        if (data.date != "") {
+            tvDateValue.text = data.date
+            tvOpenValue.text = data.open.toString()
+            tvHighValue.text = data.high.toString()
+            tvLowValue.text = data.low.toString()
+            tvCloseValue.text = data.close.toString()
+        }
     }
 }

@@ -6,12 +6,7 @@ import kotlinx.android.parcel.Parcelize
 
 data class HistoryStock(
     @SerializedName("dataset_data")
-    val dataset_data: HistoryStockBlock
-)
-
-data class HistoryStockBlock(
-    @SerializedName("data")
-    val data: HistoryStockItem
+    val dataset_data: HistoryStockItem
 )
 
 @Parcelize
@@ -31,13 +26,3 @@ data class HistoryStockItem(
     @SerializedName("Close")
     val close: Float
 ): Parcelable
-
-data class StockPrice(
-    val stockDate: String,
-    val data: Data) {
-    data class Data(
-        val open: Float,
-        val high: Float,
-        val low: Float,
-        val close: Float)
-}

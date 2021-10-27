@@ -44,16 +44,7 @@ class NewsRepositoryImpl(private val connectivityManager: ConnectivityManager) :
     }
 
     override fun getHistoryStock(start_date: String, end_date: String): Single<HistoryStock> {
-        val ivel = NetworkServiceHistory
+        return NetworkServiceHistory
             .getJSONApi().getHistoryStock(start_date, end_date)
-        Log.d("TAG_DATA", "getHistoryStock.date_has: " + start_date +  " | " + end_date)
-        Log.d("TAG_DATA", "getHistoryStock: " + ivel.subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ stories ->
-                Log.d("TAG_DATA", "get.setupObserver: " + stories.dataset_data.data)
-            }, { throwable ->
-                Log.d("TAG_DATA", "setupObserver: " + null)
-            }))
-        return ivel
     }
 }
