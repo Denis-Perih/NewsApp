@@ -13,12 +13,12 @@ import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.FragmentTransaction
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.startandroid.newsapp.R
-import com.startandroid.newsapp.data.entity.NewsItem
-import com.startandroid.newsapp.data.entity.StoriesItem
+import com.startandroid.newsapp.data.model.PopularNewsItem
+import com.startandroid.newsapp.data.model.StoriesNewsItem
 import com.startandroid.newsapp.ui.home.HomeFragment
 import com.startandroid.newsapp.ui.home.IOnBackPressed
 import com.startandroid.newsapp.ui.more.MoreItemFragment
-import com.startandroid.newsapp.ui.signin.SignInFragment
+import com.startandroid.newsapp.ui.signin.view.SignInFragment
 import com.startandroid.newsapp.ui.splash.SplashFragment
 
 @RequiresApi(Build.VERSION_CODES.M)
@@ -49,6 +49,7 @@ class MainActivity : AppCompatActivity(), MainContract {
         val fragment = supportFragmentManager.findFragmentById(R.id.mainFragmentContainer)
         if (fragment !is IOnBackPressed || !(fragment as IOnBackPressed).onBackPressed()) {
             super.onBackPressed()
+
         }
     }
 
@@ -83,8 +84,8 @@ class MainActivity : AppCompatActivity(), MainContract {
     private fun openFragment(newFragment: Fragment) {
         val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
             .setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
-            .replace(R.id.mainFragmentContainer, newFragment)
-            .addToBackStack(newFragment::class.simpleName)
+            .replace(R.id.mainFragmentContainer, newFragment, newFragment::class.java.simpleName)
+            .addToBackStack(newFragment::class.java.simpleName)
 
         transaction.commit()
     }
@@ -102,10 +103,10 @@ class MainActivity : AppCompatActivity(), MainContract {
         srlNoNetConnection.visibility = View.VISIBLE
     }
 
-    override fun openTab1MoreDetailsFragment(newsItem: NewsItem) {
+    override fun openPopularNewsMoreFragment(popularNewsItem: PopularNewsItem) {
 
         val bundle = Bundle()
-        bundle.putParcelable("newsItem", newsItem)
+        bundle.putParcelable("popularNewsItem", popularNewsItem)
 
         val fragment: Fragment = MoreItemFragment()
         fragment.arguments = bundle
@@ -113,9 +114,9 @@ class MainActivity : AppCompatActivity(), MainContract {
         openFragment(fragment)
     }
 
-    override fun openTab2MoreDetailsFragment(storiesItem: StoriesItem) {
+    override fun openTopStoriesMoreFragment(storiesNewsItem: StoriesNewsItem) {
         val bundle = Bundle()
-        bundle.putParcelable("storiesItem", storiesItem)
+        bundle.putParcelable("storiesNewsItem", storiesNewsItem)
 
         val fragment: Fragment = MoreItemFragment()
         fragment.arguments = bundle

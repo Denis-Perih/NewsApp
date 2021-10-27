@@ -9,8 +9,8 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.startandroid.newsapp.R
-import com.startandroid.newsapp.data.entity.NewsItem
-import com.startandroid.newsapp.data.entity.StoriesItem
+import com.startandroid.newsapp.data.model.PopularNewsItem
+import com.startandroid.newsapp.data.model.StoriesNewsItem
 
 class MoreItemFragment : Fragment() {
 
@@ -43,16 +43,16 @@ class MoreItemFragment : Fragment() {
     private fun setDataToPost() {
         val bundle: Bundle? = arguments
         if (bundle != null) {
-            val newsItem: NewsItem? = bundle.getParcelable("newsItem")
-            val storiesItem: StoriesItem? = bundle.getParcelable("storiesItem")
-            if (newsItem == null) {
+            val popularNewsItem: PopularNewsItem? = bundle.getParcelable("popularNewsItem")
+            val storiesItem: StoriesNewsItem? = bundle.getParcelable("storiesNewsItem")
+            if (popularNewsItem == null) {
                 tvTitleMore.text = storiesItem?.title
                 tvDateMore.text = storiesItem?.published_date
                 tvAbstract.text = storiesItem?.abstract
             } else {
-                tvTitleMore.text = newsItem.title
-                tvDateMore.text = newsItem.published_date
-                tvAbstract.text = newsItem.abstract
+                tvTitleMore.text = popularNewsItem.title
+                tvDateMore.text = popularNewsItem.published_date
+                tvAbstract.text = popularNewsItem.abstract
             }
         }
     }

@@ -1,7 +1,7 @@
 package com.startandroid.newsapp.ui.main
 
-import com.startandroid.newsapp.data.entity.NewsItem
-import com.startandroid.newsapp.data.entity.StoriesItem
+import com.startandroid.newsapp.data.model.PopularNewsItem
+import com.startandroid.newsapp.data.model.StoriesNewsItem
 
 interface MainContract {
 
@@ -11,8 +11,8 @@ interface MainContract {
 
     fun noNetConnected()
 
-    fun openTab1MoreDetailsFragment(newsItem: NewsItem)
+    fun openPopularNewsMoreFragment(popularNewsItem: PopularNewsItem)
 
-    fun openTab2MoreDetailsFragment(storiesItem: StoriesItem)
+    fun openTopStoriesMoreFragment(storiesNewsItem: StoriesNewsItem)
 
 }
