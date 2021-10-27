@@ -84,7 +84,7 @@ class HistoryStockViewModel(private val repository: NewsRepository) : ViewModel(
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ stories ->
-                    historyLiveData.postValue(Result.successData(stories.data))
+                    historyLiveData.postValue(Result.successData(stories.dataset_data.data))
 //                    Log.d("TAG_DATA", "fet.setupObserver: " + stories.data)
                 }, { throwable ->
                     historyLiveData.postValue(Result.errorData(null))

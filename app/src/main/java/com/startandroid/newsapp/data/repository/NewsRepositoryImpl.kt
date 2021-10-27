@@ -50,7 +50,7 @@ class NewsRepositoryImpl(private val connectivityManager: ConnectivityManager) :
         Log.d("TAG_DATA", "getHistoryStock: " + ivel.subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ stories ->
-                Log.d("TAG_DATA", "get.setupObserver: " + stories.data)
+                Log.d("TAG_DATA", "get.setupObserver: " + stories.dataset_data.data)
             }, { throwable ->
                 Log.d("TAG_DATA", "setupObserver: " + null)
             }))
