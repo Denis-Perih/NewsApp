@@ -35,7 +35,7 @@ class MostPopularAdapter(private var blockNewsData: List<PopularNewsItem>,
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.cvItemTabOneTwo.setOnClickListener {
-            // add answer for details
+            // answer for details
             itemForMostPopular.openItemMoreDetails(blockNewsData.get(position))
         }
         setDataToCard(holder, position)

@@ -20,10 +20,9 @@ import com.startandroid.newsapp.ui.mostpopular.ItemForMostPopular
 import com.startandroid.newsapp.ui.mostpopular.adapter.MostPopularAdapter
 import com.startandroid.newsapp.ui.mostpopular.factory.MostPopularViewModelFactory
 import com.startandroid.newsapp.ui.mostpopular.viewmodel.MostPopularViewModel
-import com.startandroid.newsapp.ui.topstories.view.TopStoriesFragment
 import com.startandroid.newsapp.utils.Status
 
-class MostPopularFragment : Fragment(), ItemForMostPopular {
+class MostPopularFragment() : Fragment(), ItemForMostPopular {
 
     private lateinit var srlSwipeContainer: SwipeRefreshLayout
     private lateinit var rvListMostPopular: RecyclerView

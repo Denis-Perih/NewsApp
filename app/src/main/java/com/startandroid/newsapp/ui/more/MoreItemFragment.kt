@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentManager
 import com.startandroid.newsapp.R
 import com.startandroid.newsapp.data.model.PopularNewsItem
 import com.startandroid.newsapp.data.model.StoriesNewsItem
+import com.startandroid.newsapp.ui.mostpopular.view.MostPopularFragment
 
 class MoreItemFragment : Fragment() {
 
@@ -28,7 +29,7 @@ class MoreItemFragment : Fragment() {
 
         btnBackHome = moreView.findViewById(R.id.btnBackHome)
         btnBackHome.setOnClickListener {
-            val fm: FragmentManager = requireActivity().supportFragmentManager
+            val fm = requireActivity().supportFragmentManager
             fm.popBackStack(MoreItemFragment::class.simpleName, FragmentManager.POP_BACK_STACK_INCLUSIVE) }
 
         tvTitleMore = moreView.findViewById(R.id.tvTitleMore)

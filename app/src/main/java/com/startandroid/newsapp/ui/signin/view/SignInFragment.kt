@@ -8,20 +8,23 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.material.snackbar.Snackbar
 import com.startandroid.newsapp.R
+import com.startandroid.newsapp.utils.IOnBackPressed
 import com.startandroid.newsapp.ui.main.MainContract
 import com.startandroid.newsapp.ui.signin.factory.SignInViewModelFactory
 import com.startandroid.newsapp.ui.signin.viewmodel.SignInViewModel
 import com.startandroid.newsapp.utils.Status
 
-class SignInFragment : Fragment(){
+class SignInFragment : Fragment(), IOnBackPressed {
 
     private lateinit var signInViewModel: SignInViewModel
     private lateinit var signInClient: GoogleSignInClient
@@ -105,5 +108,14 @@ class SignInFragment : Fragment(){
                 }
             }
         })
+    }
+
+    override fun onBackPressed(): Boolean {
+        val manager: FragmentManager = (context as AppCompatActivity)
+            .supportFragmentManager
+        if (manager.getBackStackEntryCount() > 0) {
+            requireActivity().finish()
+        }
+        return true
     }
 }

@@ -6,23 +6,23 @@
     android:background="@color/white">
 
     <androidx.viewpager.widget.ViewPager
-        android:id="@+id/vpPagerFragment"
+        android:id="@+id/vpPagerFragments"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/tlTabsFragment"/>
+        app:layout_constraintBottom_toTopOf="@+id/tlTabsFragments"/>
 
     <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tlTabsFragment"
+        android:id="@+id/tlTabsFragments"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:tabTextColor="@color/white"
         app:tabBackground="@color/black"
         app:tabIndicatorColor="@color/white"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/vpPagerFragment"
+        app:layout_constraintTop_toBottomOf="@+id/vpPagerFragments"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
 

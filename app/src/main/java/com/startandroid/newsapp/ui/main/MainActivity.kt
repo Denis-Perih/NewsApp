@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.ConnectivityManager
 import android.os.Build
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -16,7 +17,7 @@ import com.startandroid.newsapp.R
 import com.startandroid.newsapp.data.model.PopularNewsItem
 import com.startandroid.newsapp.data.model.StoriesNewsItem
 import com.startandroid.newsapp.ui.home.HomeFragment
-import com.startandroid.newsapp.ui.home.IOnBackPressed
+import com.startandroid.newsapp.utils.IOnBackPressed
 import com.startandroid.newsapp.ui.more.MoreItemFragment
 import com.startandroid.newsapp.ui.signin.view.SignInFragment
 import com.startandroid.newsapp.ui.splash.SplashFragment

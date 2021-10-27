@@ -11,13 +11,18 @@ import com.startandroid.newsapp.R
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import com.startandroid.newsapp.data.model.PopularNewsItem
+import com.startandroid.newsapp.data.model.StoriesNewsItem
 import com.startandroid.newsapp.ui.home.adapter.PageAdapter
-import com.startandroid.newsapp.ui.main.MainContract
+import com.startandroid.newsapp.ui.more.MoreMostPopular
+import com.startandroid.newsapp.ui.more.MoreTopStories
+import com.startandroid.newsapp.ui.mostpopular.view.MostPopularFragment
+import com.startandroid.newsapp.utils.IOnBackPressed
 
 
-class HomeFragment : Fragment(), IOnBackPressed {
+class HomeFragment : Fragment(), IOnBackPressed, MoreMostPopular, MoreTopStories {
 
-    lateinit var tlTabsFragment: TabLayout
+    lateinit var tlTabsFragments: TabLayout
+    lateinit var vpPagerFragments: ViewPager
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,11 +31,11 @@ class HomeFragment : Fragment(), IOnBackPressed {
     ): View {
         val homeView: View = inflater.inflate(R.layout.fr_home_screen, container, false)
 
-        val vpPagerFragment = homeView.findViewById<ViewPager>(R.id.vpPagerFragment)
-        vpPagerFragment.adapter = PageAdapter(requireActivity().supportFragmentManager)
+        vpPagerFragments = homeView.findViewById(R.id.vpPagerFragments)
+        vpPagerFragments.adapter = PageAdapter(requireActivity().supportFragmentManager)
 
-        tlTabsFragment = homeView.findViewById(R.id.tlTabsFragment)
-        tlTabsFragment.setupWithViewPager(vpPagerFragment)
+        tlTabsFragments = homeView.findViewById(R.id.tlTabsFragments)
+        tlTabsFragments.setupWithViewPager(vpPagerFragments)
 
         return homeView
     }
@@ -38,9 +43,17 @@ class HomeFragment : Fragment(), IOnBackPressed {
     override fun onBackPressed(): Boolean {
         val manager: FragmentManager = (context as AppCompatActivity)
             .supportFragmentManager
-        if (manager.getBackStackEntryCount() > 0) {
+        if (manager.backStackEntryCount > 0) {
             requireActivity().finish()
         }
         return true
+    }
+
+    override fun openMoreMostPopular(popularNewsItem: PopularNewsItem) {
+        TODO("Not yet implemented")
+    }
+
+    override fun openMoreTopStories(storiesNewsItem: StoriesNewsItem) {
+        TODO("Not yet implemented")
     }
 }
