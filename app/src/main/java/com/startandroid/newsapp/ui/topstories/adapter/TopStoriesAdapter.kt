@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.startandroid.newsapp.R
 import com.startandroid.newsapp.data.model.StoriesNews
 import com.startandroid.newsapp.data.model.StoriesNewsItem
+import com.startandroid.newsapp.ui.home.ItemMoreInterface
 import com.startandroid.newsapp.ui.topstories.ItemForTopStories
 
 class TopStoriesAdapter(private var blockNewsData: List<StoriesNewsItem>,

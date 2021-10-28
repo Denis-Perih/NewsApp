@@ -22,7 +22,7 @@ import com.startandroid.newsapp.ui.mostpopular.factory.MostPopularViewModelFacto
 import com.startandroid.newsapp.ui.mostpopular.viewmodel.MostPopularViewModel
 import com.startandroid.newsapp.utils.Status
 
-class MostPopularFragment() : Fragment(), ItemForMostPopular {
+class MostPopularFragment : Fragment(), ItemForMostPopular {
 
     private lateinit var srlSwipeContainer: SwipeRefreshLayout
     private lateinit var rvListMostPopular: RecyclerView
@@ -101,4 +101,34 @@ class MostPopularFragment() : Fragment(), ItemForMostPopular {
         fm.saveFragmentInstanceState(this)
         (requireActivity() as MainContract).openPopularNewsMoreFragment(popularNewsItem)
     }
+
+//    override fun onAttach(context: Context) {
+//        super.onAttach(context)
+//        Log.d("Back_Stack", "onAttach: MostPopularFragment")
+//    }
+//
+//    override fun onStart() {
+//        super.onStart()
+//        Log.d("Back_Stack", "onStart: MostPopularFragment")
+//    }
+//
+//    override fun onPause() {
+//        super.onPause()
+//        Log.d("Back_Stack", "onPause: MostPopularFragment")
+//    }
+//
+//    override fun onDestroyView() {
+//        super.onDestroyView()
+//        Log.d("Back_Stack", "onDestroyView: MostPopularFragment")
+//    }
+//
+//    override fun onDetach() {
+//        super.onDetach()
+//        Log.d("Back_Stack", "onDetach: MostPopularFragment")
+//    }
+//
+//    override fun onDestroy() {
+//        super.onDestroy()
+//        Log.d("Back_Stack", "onDestroy: MostPopularFragment")
+//    }
 }

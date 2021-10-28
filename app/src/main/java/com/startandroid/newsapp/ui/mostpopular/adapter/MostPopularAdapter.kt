@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.startandroid.newsapp.R
 import com.startandroid.newsapp.data.model.PopularNews
 import com.startandroid.newsapp.data.model.PopularNewsItem
+import com.startandroid.newsapp.ui.home.ItemMoreInterface
 import com.startandroid.newsapp.ui.mostpopular.ItemForMostPopular
 
 class MostPopularAdapter(private var blockNewsData: List<PopularNewsItem>,

@@ -7,8 +7,10 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 import com.startandroid.newsapp.ui.mostpopular.view.MostPopularFragment
 import com.startandroid.newsapp.ui.topstories.view.TopStoriesFragment
 import com.startandroid.newsapp.ui.historystock.view.HistoryStockFragment
+import com.startandroid.newsapp.ui.home.HomeFragment
+import com.startandroid.newsapp.ui.home.ItemMoreInterface
 
-class PageAdapter(fragmentManager: FragmentManager) : FragmentStatePagerAdapter(fragmentManager,BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+class PageAdapter(fragmentManager: FragmentManager) : FragmentStatePagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     override fun getCount(): Int {
         return 3

@@ -1,6 +1,8 @@
 package com.startandroid.newsapp.ui.home
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,16 +15,14 @@ import androidx.fragment.app.FragmentManager
 import com.startandroid.newsapp.data.model.PopularNewsItem
 import com.startandroid.newsapp.data.model.StoriesNewsItem
 import com.startandroid.newsapp.ui.home.adapter.PageAdapter
-import com.startandroid.newsapp.ui.more.MoreMostPopular
-import com.startandroid.newsapp.ui.more.MoreTopStories
-import com.startandroid.newsapp.ui.mostpopular.view.MostPopularFragment
+import com.startandroid.newsapp.ui.main.MainContract
 import com.startandroid.newsapp.utils.IOnBackPressed
 
 
-class HomeFragment : Fragment(), IOnBackPressed, MoreMostPopular, MoreTopStories {
+class HomeFragment : Fragment(), IOnBackPressed {
 
-    lateinit var tlTabsFragments: TabLayout
-    lateinit var vpPagerFragments: ViewPager
+    private lateinit var tlTabsFragments: TabLayout
+    private lateinit var vpPagerFragments: ViewPager
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,8 +34,9 @@ class HomeFragment : Fragment(), IOnBackPressed, MoreMostPopular, MoreTopStories
         vpPagerFragments = homeView.findViewById(R.id.vpPagerFragments)
         vpPagerFragments.adapter = PageAdapter(requireActivity().supportFragmentManager)
 
+
         tlTabsFragments = homeView.findViewById(R.id.tlTabsFragments)
-        tlTabsFragments.setupWithViewPager(vpPagerFragments)
+        tlTabsFragments.setupWithViewPager(vpPagerFragments, false)
 
         return homeView
     }
@@ -49,11 +50,33 @@ class HomeFragment : Fragment(), IOnBackPressed, MoreMostPopular, MoreTopStories
         return true
     }
 
-    override fun openMoreMostPopular(popularNewsItem: PopularNewsItem) {
-        TODO("Not yet implemented")
-    }
-
-    override fun openMoreTopStories(storiesNewsItem: StoriesNewsItem) {
-        TODO("Not yet implemented")
-    }
+//    override fun onAttach(context: Context) {
+//        super.onAttach(context)
+//        Log.d("Back_Stack", "onAttach: HomeFragment")
+//    }
+//
+//    override fun onStart() {
+//        super.onStart()
+//        Log.d("Back_Stack", "onStart: HomeFragment")
+//    }
+//
+//    override fun onPause() {
+//        super.onPause()
+//        Log.d("Back_Stack", "onPause: HomeFragment")
+//    }
+//
+//    override fun onDestroyView() {
+//        super.onDestroyView()
+//        Log.d("Back_Stack", "onDestroyView: HomeFragment")
+//    }
+//
+//    override fun onDetach() {
+//        super.onDetach()
+//        Log.d("Back_Stack", "onDetach: HomeFragment")
+//    }
+//
+//    override fun onDestroy() {
+//        super.onDestroy()
+//        Log.d("Back_Stack", "onDestroy: HomeFragment")
+//    }
 }
