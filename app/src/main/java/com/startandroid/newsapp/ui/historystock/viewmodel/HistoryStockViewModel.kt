@@ -1,17 +1,16 @@
 package com.startandroid.newsapp.ui.historystock.viewmodel
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.startandroid.newsapp.data.model.HistoryStockItem
 import com.startandroid.newsapp.data.repository.NewsRepository
 import com.startandroid.newsapp.utils.Result
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import io.reactivex.Observable
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
