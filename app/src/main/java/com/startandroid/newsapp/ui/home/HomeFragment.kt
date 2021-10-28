@@ -1,38 +1,27 @@
 package com.startandroid.newsapp.ui.home
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.viewpager.widget.ViewPager
-import com.google.android.material.tabs.TabLayout
-import com.startandroid.newsapp.R
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import com.startandroid.newsapp.data.model.PopularNewsItem
+import com.startandroid.newsapp.R
+import com.startandroid.newsapp.databinding.FrHomeScreenBinding
 import com.startandroid.newsapp.ui.home.adapter.PageAdapter
-import com.startandroid.newsapp.ui.main.MainContract
 
 
-class HomeFragment : Fragment(), IOnBackPressed {
+class HomeFragment : Fragment(R.layout.fr_home_screen), IOnBackPressed {
 
-    lateinit var tlTabsFragment: TabLayout
+    private var bind: FrHomeScreenBinding? = null
+    private val binding get() = bind!!
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        val homeView: View = inflater.inflate(R.layout.fr_home_screen, container, false)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        val vpPagerFragment = homeView.findViewById<ViewPager>(R.id.vpPagerFragment)
-        vpPagerFragment.adapter = PageAdapter(requireActivity().supportFragmentManager)
+        bind = FrHomeScreenBinding.bind(view)
 
-        tlTabsFragment = homeView.findViewById(R.id.tlTabsFragment)
-        tlTabsFragment.setupWithViewPager(vpPagerFragment)
-
-        return homeView
+        binding.vpPagerFragment.adapter = PageAdapter(requireActivity().supportFragmentManager)
+        binding.tlTabsFragment.setupWithViewPager(binding.vpPagerFragment)
     }
 
     override fun onBackPressed(): Boolean {
@@ -42,5 +31,10 @@ class HomeFragment : Fragment(), IOnBackPressed {
             requireActivity().finish()
         }
         return true
+    }
+
+    override fun onDestroyView() {
+        bind = null
+        super.onDestroyView()
     }
 }

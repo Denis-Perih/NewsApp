@@ -3,68 +3,50 @@ package com.startandroid.newsapp.ui.signin.view
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import androidx.lifecycle.ViewModelProviders
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.material.snackbar.Snackbar
 import com.startandroid.newsapp.R
+import com.startandroid.newsapp.databinding.FrSignInScreenBinding
 import com.startandroid.newsapp.ui.main.MainContract
 import com.startandroid.newsapp.ui.signin.factory.SignInViewModelFactory
 import com.startandroid.newsapp.ui.signin.viewmodel.SignInViewModel
 import com.startandroid.newsapp.utils.Status
 
-class SignInFragment : Fragment(){
+class SignInFragment : Fragment(R.layout.fr_sign_in_screen){
+
+    private var bind: FrSignInScreenBinding? = null
+    private val binding get() = bind!!
 
     private lateinit var signInViewModel: SignInViewModel
     private lateinit var signInClient: GoogleSignInClient
-
-    private lateinit var clFragmentLoginScreen: ConstraintLayout
-    private lateinit var etNameSignIn: EditText
-    private lateinit var btnEnterNameSignIn: Button
-    private lateinit var btnGoogleSignIn: Button
 
     companion object {
         const val NEWS_SIGN_IN = 0
     }
 
-    private lateinit var signInView: View
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        signInView = inflater.inflate(R.layout.fr_sign_in_screen, container, false)
+        bind = FrSignInScreenBinding.bind(view)
 
         setupUI()
         setupViewModel()
         setGoogleAuth()
         observeGoogleAccount()
-
-        return signInView
     }
 
     private fun setupUI() {
-        etNameSignIn = signInView.findViewById(R.id.etNameSignIn)
-
-        btnEnterNameSignIn = signInView.findViewById(R.id.btnEnterNameSignIn)
-        btnEnterNameSignIn.setOnClickListener {
+        binding.btnEnterNameSignIn.setOnClickListener {
             (requireActivity() as MainContract).openHomeFragment()
         }
-        btnGoogleSignIn = signInView.findViewById(R.id.btnGoogleSignIn)
-        btnGoogleSignIn.setOnClickListener {
+        binding.btnGoogleSignIn.setOnClickListener {
             requireActivity().startActivityForResult(signInClient.signInIntent, NEWS_SIGN_IN)
         }
-
-        clFragmentLoginScreen = signInView.findViewById(R.id.clFragmentLoginScreen)
     }
 
     private fun setupViewModel() {
@@ -101,9 +83,14 @@ class SignInFragment : Fragment(){
                     (requireActivity() as MainContract).openHomeFragment()
                 }
                 Status.ERROR -> {
-                    Snackbar.make(clFragmentLoginScreen, "error account", Snackbar.LENGTH_SHORT).show()
+                    Snackbar.make(binding.clFragmentLoginScreen, "error account", Snackbar.LENGTH_SHORT).show()
                 }
             }
         })
+    }
+
+    override fun onDestroyView() {
+        bind = null
+        super.onDestroyView()
     }
 }

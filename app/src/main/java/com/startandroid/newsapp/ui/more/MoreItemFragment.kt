@@ -1,43 +1,29 @@
 package com.startandroid.newsapp.ui.more
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.Button
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.startandroid.newsapp.R
 import com.startandroid.newsapp.data.model.PopularNewsItem
 import com.startandroid.newsapp.data.model.StoriesNewsItem
+import com.startandroid.newsapp.databinding.FrMoreScreenBinding
 
-class MoreItemFragment : Fragment() {
+class MoreItemFragment : Fragment(R.layout.fr_more_screen) {
 
-    lateinit var btnBackHome: Button
-    lateinit var tvTitleMore: TextView
-    lateinit var tvDateMore: TextView
-    lateinit var tvAbstract: TextView
+    private var bind: FrMoreScreenBinding? = null
+    private val binding get() = bind!!
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        val moreView: View = inflater.inflate(R.layout.fr_more_screen, container, false)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        btnBackHome = moreView.findViewById(R.id.btnBackHome)
-        btnBackHome.setOnClickListener {
+        bind = FrMoreScreenBinding.bind(view)
+
+        binding.btnBackHome.setOnClickListener {
             val fm: FragmentManager = requireActivity().supportFragmentManager
             fm.popBackStack(MoreItemFragment::class.simpleName, FragmentManager.POP_BACK_STACK_INCLUSIVE) }
 
-        tvTitleMore = moreView.findViewById(R.id.tvTitleMore)
-        tvDateMore = moreView.findViewById(R.id.tvDateMore)
-        tvAbstract = moreView.findViewById(R.id.tvAbstract)
-
         setDataToPost()
-
-        return moreView
     }
 
     private fun setDataToPost() {
@@ -46,14 +32,19 @@ class MoreItemFragment : Fragment() {
             val popularNewsItem: PopularNewsItem? = bundle.getParcelable("popularNewsItem")
             val storiesItem: StoriesNewsItem? = bundle.getParcelable("storiesNewsItem")
             if (popularNewsItem == null) {
-                tvTitleMore.text = storiesItem?.title
-                tvDateMore.text = storiesItem?.published_date
-                tvAbstract.text = storiesItem?.abstract
+                binding.tvTitleMore.text = storiesItem?.title
+                binding.tvDateMore.text = storiesItem?.published_date
+                binding.tvAbstract.text = storiesItem?.abstract
             } else {
-                tvTitleMore.text = popularNewsItem.title
-                tvDateMore.text = popularNewsItem.published_date
-                tvAbstract.text = popularNewsItem.abstract
+                binding.tvTitleMore.text = popularNewsItem.title
+                binding.tvDateMore.text = popularNewsItem.published_date
+                binding.tvAbstract.text = popularNewsItem.abstract
             }
         }
+    }
+
+    override fun onDestroyView() {
+        bind = null
+        super.onDestroyView()
     }
 }
