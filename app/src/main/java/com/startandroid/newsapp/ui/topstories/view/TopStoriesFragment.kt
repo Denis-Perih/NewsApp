@@ -91,8 +91,8 @@ class TopStoriesFragment : Fragment(R.layout.fr_top_stories), ItemForTopStories 
         (requireActivity() as MainContract).openTopStoriesMoreFragment(storiesNewsItem)
     }
 
-    override fun onDestroy() {
+    override fun onDestroyView() {
         bind = null
-        super.onDestroy()
+        super.onDestroyView()
     }
 }

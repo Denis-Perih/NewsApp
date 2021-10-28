@@ -91,8 +91,8 @@ class MostPopularFragment : Fragment(R.layout.fr_most_popular), ItemForMostPopul
         (requireActivity() as MainContract).openPopularNewsMoreFragment(popularNewsItem)
     }
 
-    override fun onDestroy() {
+    override fun onDestroyView() {
         bind = null
-        super.onDestroy()
+        super.onDestroyView()
     }
 }

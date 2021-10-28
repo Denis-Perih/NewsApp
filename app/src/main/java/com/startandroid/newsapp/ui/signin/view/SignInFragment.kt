@@ -89,8 +89,8 @@ class SignInFragment : Fragment(R.layout.fr_sign_in_screen){
         })
     }
 
-    override fun onDestroy() {
+    override fun onDestroyView() {
         bind = null
-        super.onDestroy()
+        super.onDestroyView()
     }
 }

@@ -29,8 +29,8 @@ class SplashFragment : Fragment(R.layout.fr_splash_screen) {
         binding.btnOpenHomeFragment.animation = buttonAnimation
     }
 
-    override fun onDestroy() {
+    override fun onDestroyView() {
         bind = null
-        super.onDestroy()
+        super.onDestroyView()
     }
 }

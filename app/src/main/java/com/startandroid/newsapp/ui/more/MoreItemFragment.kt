@@ -43,8 +43,8 @@ class MoreItemFragment : Fragment(R.layout.fr_more_screen) {
         }
     }
 
-    override fun onDestroy() {
+    override fun onDestroyView() {
         bind = null
-        super.onDestroy()
+        super.onDestroyView()
     }
 }

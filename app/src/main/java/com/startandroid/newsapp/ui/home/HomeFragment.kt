@@ -33,8 +33,8 @@ class HomeFragment : Fragment(R.layout.fr_home_screen), IOnBackPressed {
         return true
     }
 
-    override fun onDestroy() {
+    override fun onDestroyView() {
         bind = null
-        super.onDestroy()
+        super.onDestroyView()
     }
 }

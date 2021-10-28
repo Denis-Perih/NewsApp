@@ -67,8 +67,8 @@ class HistoryStockFragment : Fragment(R.layout.fr_history_stock) {
         }
     }
 
-    override fun onDestroy() {
+    override fun onDestroyView() {
         bind = null
-        super.onDestroy()
+        super.onDestroyView()
     }
 }
