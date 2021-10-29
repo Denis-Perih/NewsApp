@@ -1,44 +1,27 @@
 package com.startandroid.newsapp.ui.home
 
-import android.content.Context
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.viewpager.widget.ViewPager
-import com.google.android.material.tabs.TabLayout
-import com.startandroid.newsapp.R
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import com.startandroid.newsapp.data.model.PopularNewsItem
-import com.startandroid.newsapp.data.model.StoriesNewsItem
+import com.startandroid.newsapp.R
+import com.startandroid.newsapp.databinding.FrHomeScreenBinding
 import com.startandroid.newsapp.ui.home.adapter.PageAdapter
-import com.startandroid.newsapp.ui.main.MainContract
 import com.startandroid.newsapp.utils.IOnBackPressed
 
+class HomeFragment : Fragment(R.layout.fr_home_screen), IOnBackPressed {
 
-class HomeFragment : Fragment(), IOnBackPressed {
+    private var bind: FrHomeScreenBinding? = null
+    private val binding get() = bind!!
 
-    private lateinit var tlTabsFragments: TabLayout
-    private lateinit var vpPagerFragments: ViewPager
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        val homeView: View = inflater.inflate(R.layout.fr_home_screen, container, false)
+        bind = FrHomeScreenBinding.bind(view)
 
-        vpPagerFragments = homeView.findViewById(R.id.vpPagerFragments)
-        vpPagerFragments.adapter = PageAdapter(requireActivity().supportFragmentManager)
-
-
-        tlTabsFragments = homeView.findViewById(R.id.tlTabsFragments)
-        tlTabsFragments.setupWithViewPager(vpPagerFragments, false)
-
-        return homeView
+        binding.vpPagerFragments.adapter = PageAdapter(requireActivity().supportFragmentManager)
+        binding.tlTabsFragments.setupWithViewPager(binding.vpPagerFragments, false)
     }
 
     override fun onBackPressed(): Boolean {
@@ -79,4 +62,9 @@ class HomeFragment : Fragment(), IOnBackPressed {
 //        super.onDestroy()
 //        Log.d("Back_Stack", "onDestroy: HomeFragment")
 //    }
+
+    override fun onDestroyView() {
+        bind = null
+        super.onDestroyView()
+    }
 }

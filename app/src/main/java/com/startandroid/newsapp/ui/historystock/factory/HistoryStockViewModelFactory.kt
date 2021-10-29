@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.startandroid.newsapp.data.repository.NewsRepositoryImpl
 import com.startandroid.newsapp.ui.historystock.viewmodel.HistoryStockViewModel
-import com.startandroid.newsapp.ui.mostpopular.viewmodel.MostPopularViewModel
 
 class HistoryStockViewModelFactory(private val connectivityManager: ConnectivityManager) : ViewModelProvider.Factory {
 

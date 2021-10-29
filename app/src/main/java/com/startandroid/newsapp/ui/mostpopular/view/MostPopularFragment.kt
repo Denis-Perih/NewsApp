@@ -3,18 +3,16 @@ package com.startandroid.newsapp.ui.mostpopular.view
 import android.content.Context
 import android.net.ConnectivityManager
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.startandroid.newsapp.R
 import com.startandroid.newsapp.data.model.PopularNewsItem
+import com.startandroid.newsapp.databinding.FrMostPopularBinding
 import com.startandroid.newsapp.ui.main.MainContract
 import com.startandroid.newsapp.ui.mostpopular.ItemForMostPopular
 import com.startandroid.newsapp.ui.mostpopular.adapter.MostPopularAdapter
@@ -22,53 +20,44 @@ import com.startandroid.newsapp.ui.mostpopular.factory.MostPopularViewModelFacto
 import com.startandroid.newsapp.ui.mostpopular.viewmodel.MostPopularViewModel
 import com.startandroid.newsapp.utils.Status
 
-class MostPopularFragment : Fragment(), ItemForMostPopular {
+class MostPopularFragment : Fragment(R.layout.fr_most_popular), ItemForMostPopular {
 
-    private lateinit var srlSwipeContainer: SwipeRefreshLayout
-    private lateinit var rvListMostPopular: RecyclerView
+    private var bind: FrMostPopularBinding? = null
+    private val binding get() = bind!!
 
     private lateinit var mostPopularViewModel: MostPopularViewModel
     private lateinit var mostPopularAdapter: MostPopularAdapter
     private lateinit var connectivityManager: ConnectivityManager
 
-    lateinit var oneView: View
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-
-        oneView = inflater.inflate(R.layout.fr_most_popular, container, false)
+        bind = FrMostPopularBinding.bind(view)
 
         setupUI()
         setupViewModel()
         setupObserver()
-
-        return oneView
     }
 
     private fun setupUI() {
         connectivityManager = requireActivity().applicationContext
             .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
-        srlSwipeContainer = oneView.findViewById(R.id.srlSwipeContainer)
-        srlSwipeContainer.setOnRefreshListener {
+        binding.srlSwipeContainer.setOnRefreshListener {
             setupObserver()
-            srlSwipeContainer.isRefreshing = false
+            binding.srlSwipeContainer.isRefreshing = false
         }
 
-        rvListMostPopular = oneView.findViewById(R.id.rvListMostPopular)
-        val layoutManager = LinearLayoutManager(rvListMostPopular.context, RecyclerView.VERTICAL, false)
-        rvListMostPopular.layoutManager = layoutManager
+        val layoutManager = LinearLayoutManager(binding.rvListMostPopular.context, RecyclerView.VERTICAL, false)
+        binding.rvListMostPopular.layoutManager = layoutManager
         mostPopularAdapter = MostPopularAdapter(arrayListOf(), this)
-        rvListMostPopular.addItemDecoration(
+        binding.rvListMostPopular.addItemDecoration(
             DividerItemDecoration(
-                rvListMostPopular.context,
-                (rvListMostPopular.layoutManager as LinearLayoutManager).orientation
+                binding.rvListMostPopular.context,
+                (binding.rvListMostPopular.layoutManager as LinearLayoutManager).orientation
             )
         )
-        rvListMostPopular.adapter = mostPopularAdapter
+        binding.rvListMostPopular.adapter = mostPopularAdapter
     }
 
     private fun setupViewModel() {
@@ -131,4 +120,8 @@ class MostPopularFragment : Fragment(), ItemForMostPopular {
 //        super.onDestroy()
 //        Log.d("Back_Stack", "onDestroy: MostPopularFragment")
 //    }
+    override fun onDestroyView() {
+        bind = null
+        super.onDestroyView()
+    }
 }

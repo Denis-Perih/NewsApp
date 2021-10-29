@@ -5,36 +5,34 @@ import android.content.Intent
 import android.net.ConnectivityManager
 import android.os.Build
 import android.os.Bundle
-import android.view.KeyEvent
 import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentContainerView
 import androidx.fragment.app.FragmentTransaction
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.startandroid.newsapp.R
 import com.startandroid.newsapp.data.model.PopularNewsItem
 import com.startandroid.newsapp.data.model.StoriesNewsItem
+import com.startandroid.newsapp.databinding.ActivityMainBinding
 import com.startandroid.newsapp.ui.home.HomeFragment
-import com.startandroid.newsapp.utils.IOnBackPressed
 import com.startandroid.newsapp.ui.more.MoreItemFragment
 import com.startandroid.newsapp.ui.signin.view.SignInFragment
 import com.startandroid.newsapp.ui.splash.SplashFragment
+import com.startandroid.newsapp.utils.IOnBackPressed
 
 @RequiresApi(Build.VERSION_CODES.M)
 class MainActivity : AppCompatActivity(), MainContract {
 
-    private lateinit var srlNoNetConnection: SwipeRefreshLayout
-    private lateinit var mainFragmentContainer: FragmentContainerView
+    private var bind: ActivityMainBinding? = null
+    private val binding get() = bind!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
-        mainFragmentContainer = findViewById(R.id.mainFragmentContainer)
-        srlNoNetConnection = findViewById(R.id.srlNoNetConnection)
-        with(srlNoNetConnection) {
+        bind = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        with(binding.srlNoNetConnection) {
             this.setOnRefreshListener {
                 if (isNetConnected()) {
                     startApp()
@@ -73,12 +71,12 @@ class MainActivity : AppCompatActivity(), MainContract {
     }
 
     fun startApp() = if (isNetConnected()) {
-        srlNoNetConnection.visibility = View.INVISIBLE
-        mainFragmentContainer.visibility = View.VISIBLE
+        binding.srlNoNetConnection.visibility = View.INVISIBLE
+        binding.mainFragmentContainer.visibility = View.VISIBLE
         openFragment(SplashFragment())
     } else {
-        mainFragmentContainer.visibility = View.INVISIBLE
-        srlNoNetConnection.visibility = View.VISIBLE
+        binding.mainFragmentContainer.visibility = View.INVISIBLE
+        binding.srlNoNetConnection.visibility = View.VISIBLE
     }
 
     private fun openFragment(newFragment: Fragment) {
@@ -99,8 +97,8 @@ class MainActivity : AppCompatActivity(), MainContract {
     }
 
     override fun noNetConnected() {
-        mainFragmentContainer.visibility = View.INVISIBLE
-        srlNoNetConnection.visibility = View.VISIBLE
+        binding.mainFragmentContainer.visibility = View.INVISIBLE
+        binding.srlNoNetConnection.visibility = View.VISIBLE
     }
 
     override fun openPopularNewsMoreFragment(popularNewsItem: PopularNewsItem) {
@@ -122,5 +120,10 @@ class MainActivity : AppCompatActivity(), MainContract {
         fragment.arguments = bundle
 
         openFragment(fragment)
+    }
+
+    override fun onDestroy() {
+        bind = null
+        super.onDestroy()
     }
 }

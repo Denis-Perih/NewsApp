@@ -3,56 +3,38 @@ package com.startandroid.newsapp.ui.historystock.view
 import android.content.Context
 import android.net.ConnectivityManager
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.startandroid.newsapp.R
 import com.startandroid.newsapp.data.model.HistoryStockItem
+import com.startandroid.newsapp.databinding.FrHistoryStockBinding
 import com.startandroid.newsapp.ui.historystock.factory.HistoryStockViewModelFactory
 import com.startandroid.newsapp.ui.historystock.viewmodel.HistoryStockViewModel
 import com.startandroid.newsapp.utils.Status
 
-class HistoryStockFragment : Fragment() {
+class HistoryStockFragment : Fragment(R.layout.fr_history_stock) {
+
+    private var bind: FrHistoryStockBinding? = null
+    private val binding get() = bind!!
 
     private lateinit var historyStockViewModel: HistoryStockViewModel
     private lateinit var connectivityManager: ConnectivityManager
 
-    private lateinit var tvDateValue: TextView
-    private lateinit var tvOpenValue: TextView
-    private lateinit var tvHighValue: TextView
-    private lateinit var tvLowValue: TextView
-    private lateinit var tvCloseValue: TextView
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-    lateinit var historyView: View
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        historyView = inflater.inflate(R.layout.fr_history_stock, container, false)
+        bind = FrHistoryStockBinding.bind(view)
 
         setupUI()
         setupViewModel()
         setupObserver()
-
-        return historyView
     }
 
     private fun setupUI() {
         connectivityManager = requireActivity().applicationContext
             .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-
-        tvDateValue = historyView.findViewById(R.id.tvDateValue)
-        tvOpenValue = historyView.findViewById(R.id.tvOpenValue)
-        tvHighValue = historyView.findViewById(R.id.tvHighValue)
-        tvLowValue = historyView.findViewById(R.id.tvLowValue)
-        tvCloseValue = historyView.findViewById(R.id.tvCloseValue)
-
     }
 
     private fun setupViewModel() {
@@ -77,11 +59,16 @@ class HistoryStockFragment : Fragment() {
 
     private fun updateData(data: HistoryStockItem) {
         if (data.date != "") {
-            tvDateValue.text = data.date
-            tvOpenValue.text = data.open.toString()
-            tvHighValue.text = data.high.toString()
-            tvLowValue.text = data.low.toString()
-            tvCloseValue.text = data.close.toString()
+            binding.tvDateValue.text = data.date
+            binding.tvOpenValue.text = data.open.toString()
+            binding.tvHighValue.text = data.high.toString()
+            binding.tvLowValue.text = data.low.toString()
+            binding.tvCloseValue.text = data.close.toString()
         }
+    }
+
+    override fun onDestroyView() {
+        bind = null
+        super.onDestroyView()
     }
 }

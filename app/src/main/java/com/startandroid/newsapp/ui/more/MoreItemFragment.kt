@@ -1,51 +1,29 @@
 package com.startandroid.newsapp.ui.more
 
-import android.content.Context
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.Button
-import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.startandroid.newsapp.R
 import com.startandroid.newsapp.data.model.PopularNewsItem
 import com.startandroid.newsapp.data.model.StoriesNewsItem
-import com.startandroid.newsapp.ui.main.MainContract
-import com.startandroid.newsapp.ui.mostpopular.view.MostPopularFragment
-import com.startandroid.newsapp.utils.IOnBackPressed
+import com.startandroid.newsapp.databinding.FrMoreScreenBinding
 
-class MoreItemFragment : Fragment() {
+class MoreItemFragment : Fragment(R.layout.fr_more_screen) {
 
-    private lateinit var btnBackHome: Button
-    private lateinit var tvTitleMore: TextView
-    private lateinit var tvDateMore: TextView
-    private lateinit var tvAbstract: TextView
+    private var bind: FrMoreScreenBinding? = null
+    private val binding get() = bind!!
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        val moreView: View = inflater.inflate(R.layout.fr_more_screen, container, false)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        btnBackHome = moreView.findViewById(R.id.btnBackHome)
-        btnBackHome.setOnClickListener {
-            val fm = requireActivity().supportFragmentManager
-            fm.popBackStack(MoreItemFragment::class.simpleName, FragmentManager.POP_BACK_STACK_INCLUSIVE)
-//            (requireActivity() as MainContract).openHomeFragment()
-        }
+        bind = FrMoreScreenBinding.bind(view)
 
-        tvTitleMore = moreView.findViewById(R.id.tvTitleMore)
-        tvDateMore = moreView.findViewById(R.id.tvDateMore)
-        tvAbstract = moreView.findViewById(R.id.tvAbstract)
+        binding.btnBackHome.setOnClickListener {
+            val fm: FragmentManager = requireActivity().supportFragmentManager
+            fm.popBackStack(MoreItemFragment::class.simpleName, FragmentManager.POP_BACK_STACK_INCLUSIVE) }
 
         setDataToPost()
-
-        return moreView
     }
 
     private fun setDataToPost() {
@@ -54,13 +32,13 @@ class MoreItemFragment : Fragment() {
             val popularNewsItem: PopularNewsItem? = bundle.getParcelable("popularNewsItem")
             val storiesItem: StoriesNewsItem? = bundle.getParcelable("storiesNewsItem")
             if (popularNewsItem == null) {
-                tvTitleMore.text = storiesItem?.title
-                tvDateMore.text = storiesItem?.published_date?.substring(0, 10)
-                tvAbstract.text = storiesItem?.abstract
+                binding.tvTitleMore.text = storiesItem?.title
+                binding.tvDateMore.text = storiesItem?.published_date
+                binding.tvAbstract.text = storiesItem?.abstract
             } else {
-                tvTitleMore.text = popularNewsItem.title
-                tvDateMore.text = popularNewsItem.published_date?.substring(0, 10)
-                tvAbstract.text = popularNewsItem.abstract
+                binding.tvTitleMore.text = popularNewsItem.title
+                binding.tvDateMore.text = popularNewsItem.published_date
+                binding.tvAbstract.text = popularNewsItem.abstract
             }
         }
     }
@@ -99,4 +77,9 @@ class MoreItemFragment : Fragment() {
 //        super.onDestroy()
 //        Log.d("Back_Stack", "onDestroy: MoreItemFragment")
 //    }
+
+    override fun onDestroyView() {
+        bind = null
+        super.onDestroyView()
+    }
 }
