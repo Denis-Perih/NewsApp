@@ -8,7 +8,6 @@ import com.startandroid.newsapp.data.api.network.NetworkServiceTabOneTwo
 import com.startandroid.newsapp.data.model.HistoryStock
 import com.startandroid.newsapp.data.model.PopularNews
 import com.startandroid.newsapp.data.model.StoriesNews
-import io.reactivex.Single
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -20,7 +19,7 @@ class NewsRepositoryImpl(private val connectivityManager: ConnectivityManager) :
         return withContext(Dispatchers.IO) {
             NetworkServiceTabOneTwo
                 .getJSONApi()
-                .getMostPopular(apiKey).await()
+                .getMostPopular(apiKey)
         }
     }
 
@@ -28,7 +27,7 @@ class NewsRepositoryImpl(private val connectivityManager: ConnectivityManager) :
         return withContext(Dispatchers.IO) {
             NetworkServiceTabOneTwo
                 .getJSONApi()
-                .getTopStories(apiKey).await()
+                .getTopStories(apiKey)
         }
     }
 
@@ -47,7 +46,7 @@ class NewsRepositoryImpl(private val connectivityManager: ConnectivityManager) :
     override suspend fun getHistoryStock(start_date: String, end_date: String): HistoryStock {
         return withContext(Dispatchers.IO) {
             NetworkServiceHistory
-                .getJSONApi().getHistoryStock(start_date, end_date).await()
+                .getJSONApi().getHistoryStock(start_date, end_date)
         }
     }
 }
