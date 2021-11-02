@@ -86,8 +86,8 @@ class TopStoriesFragment : Fragment(R.layout.fr_top_stories), ItemForTopStories 
     }
 
     override fun openItemMoreDetails(storiesNewsItem: StoriesNewsItem) {
-        val fm = requireActivity().supportFragmentManager
-        fm.saveFragmentInstanceState(this)
+        val fm = parentFragment?.childFragmentManager
+        fm?.saveFragmentInstanceState(this)
         (requireActivity() as MainContract).openTopStoriesMoreFragment(storiesNewsItem)
     }
 
