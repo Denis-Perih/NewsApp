@@ -8,16 +8,12 @@ import androidx.lifecycle.viewModelScope
 import com.startandroid.newsapp.data.model.PopularNews
 import com.startandroid.newsapp.data.repository.NewsRepository
 import com.startandroid.newsapp.utils.Result
-import io.reactivex.disposables.CompositeDisposable
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class MostPopularViewModel(private val repository: NewsRepository) : ViewModel() {
 
     private val mostPopularLiveData = MutableLiveData<Result<PopularNews>>()
     private val mostPopularLiveDataNet = MutableLiveData<String>()
-    private val compositeDisposable = CompositeDisposable()
 
     init {
         viewModelScope.launch {
@@ -30,13 +26,12 @@ class MostPopularViewModel(private val repository: NewsRepository) : ViewModel()
     }
 
     private suspend fun fetchMostPopular() {
-            val singleNews = repository.getMostPopular()
-            if (singleNews != null) {
-                mostPopularLiveData.postValue(Result.successData(singleNews))
-                Log.d("TAG", "fetchMostPopular2: ${singleNews}")
-            } else {
-                mostPopularLiveData.postValue(Result.errorData(null))
-            }
+        val mostPopularData = repository.getMostPopular()
+        if (mostPopularData != null) {
+            mostPopularLiveData.postValue(Result.successData(mostPopularData))
+        } else {
+            mostPopularLiveData.postValue(Result.errorData(null))
+        }
     }
 
     fun getMostPopular(): LiveData<Result<PopularNews>> {
@@ -44,12 +39,7 @@ class MostPopularViewModel(private val repository: NewsRepository) : ViewModel()
         return mostPopularLiveData
     }
 
-    fun getMostPopularNet() : LiveData<String> {
+    fun getMostPopularNet(): LiveData<String> {
         return mostPopularLiveDataNet
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        compositeDisposable.dispose()
     }
 }
