@@ -33,36 +33,6 @@ class HomeFragment : Fragment(R.layout.fr_home_screen), IOnBackPressed {
         return true
     }
 
-//    override fun onAttach(context: Context) {
-//        super.onAttach(context)
-//        Log.d("Back_Stack", "onAttach: HomeFragment")
-//    }
-//
-//    override fun onStart() {
-//        super.onStart()
-//        Log.d("Back_Stack", "onStart: HomeFragment")
-//    }
-//
-//    override fun onPause() {
-//        super.onPause()
-//        Log.d("Back_Stack", "onPause: HomeFragment")
-//    }
-//
-//    override fun onDestroyView() {
-//        super.onDestroyView()
-//        Log.d("Back_Stack", "onDestroyView: HomeFragment")
-//    }
-//
-//    override fun onDetach() {
-//        super.onDetach()
-//        Log.d("Back_Stack", "onDetach: HomeFragment")
-//    }
-//
-//    override fun onDestroy() {
-//        super.onDestroy()
-//        Log.d("Back_Stack", "onDestroy: HomeFragment")
-//    }
-
     override fun onDestroyView() {
         bind = null
         super.onDestroyView()

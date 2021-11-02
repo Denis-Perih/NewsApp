@@ -73,13 +73,13 @@ class MainActivity : AppCompatActivity(), MainContract {
     fun startApp() = if (isNetConnected()) {
         binding.srlNoNetConnection.visibility = View.INVISIBLE
         binding.mainFragmentContainer.visibility = View.VISIBLE
-        openFragment(SplashFragment())
+        openSimpleFragment(SplashFragment())
     } else {
         binding.mainFragmentContainer.visibility = View.INVISIBLE
         binding.srlNoNetConnection.visibility = View.VISIBLE
     }
 
-    private fun openFragment(newFragment: Fragment) {
+    private fun openSimpleFragment(newFragment: Fragment) {
         val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
             .setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
             .replace(R.id.mainFragmentContainer, newFragment, newFragment::class.java.simpleName)
@@ -88,12 +88,21 @@ class MainActivity : AppCompatActivity(), MainContract {
         transaction.commit()
     }
 
+    private fun openMoreFragment(newFragment: Fragment) {
+        val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
+            .setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
+            .add(R.id.mainFragmentContainer, newFragment, newFragment::class.java.simpleName)
+            .addToBackStack(newFragment::class.java.simpleName)
+
+        transaction.commit()
+    }
+
     override fun openHomeFragment() {
-        openFragment(HomeFragment())
+        openSimpleFragment(HomeFragment())
     }
 
     override fun openSignInFragment() {
-        openFragment(SignInFragment())
+        openSimpleFragment(SignInFragment())
     }
 
     override fun noNetConnected() {
@@ -109,7 +118,7 @@ class MainActivity : AppCompatActivity(), MainContract {
         val fragment: Fragment = MoreItemFragment()
         fragment.arguments = bundle
 
-        openFragment(fragment)
+        openMoreFragment(fragment)
     }
 
     override fun openTopStoriesMoreFragment(storiesNewsItem: StoriesNewsItem) {
@@ -119,7 +128,7 @@ class MainActivity : AppCompatActivity(), MainContract {
         val fragment: Fragment = MoreItemFragment()
         fragment.arguments = bundle
 
-        openFragment(fragment)
+        openMoreFragment(fragment)
     }
 
     override fun onDestroy() {
