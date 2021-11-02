@@ -1,5 +1,6 @@
 package com.startandroid.newsapp.data.api.network
 
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import retrofit2.Retrofit
 import okhttp3.logging.HttpLoggingInterceptor
 import okhttp3.OkHttpClient
@@ -24,8 +25,8 @@ object NetworkServiceTabOneTwo {
         retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(CoroutineCallAdapterFactory())
             .client(client.build())
-            .addCallAdapterFactory()
             .build()
     }
 }

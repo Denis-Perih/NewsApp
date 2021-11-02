@@ -61,11 +61,7 @@ class HistoryStockViewModel(private val repository: NewsRepository) : ViewModel(
     private fun fetchHistory(date: String) {
         viewModelScope.launch(Dispatchers.IO) {
             val singleDate = repository.getHistoryStock(date, date)
-            if (singleDate.blockingGet() != null) {
-                historyLiveData.postValue(Result.successData(singleDate.blockingGet().dataset_data))
-            } else {
-                historyLiveData.postValue(Result.errorData(null))
-            }
+            historyLiveData.postValue(Result.successData(singleDate.dataset_data))
         }
     }
 

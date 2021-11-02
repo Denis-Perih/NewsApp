@@ -9,9 +9,9 @@ interface NewsRepository {
 
     suspend fun getMostPopular(): PopularNews
 
-    suspend fun getTopStories(): Single<StoriesNews>
+    suspend fun getTopStories(): StoriesNews
 
     suspend fun isNetConnected(): Boolean
 
-    suspend fun getHistoryStock(start_date: String, end_date: String): Single<HistoryStock>
+    suspend fun getHistoryStock(start_date: String, end_date: String): HistoryStock
 }

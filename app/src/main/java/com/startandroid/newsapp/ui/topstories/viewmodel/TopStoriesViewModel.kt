@@ -8,9 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.startandroid.newsapp.data.model.StoriesNews
 import com.startandroid.newsapp.data.repository.NewsRepository
 import com.startandroid.newsapp.utils.Result
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -33,11 +31,7 @@ class TopStoriesViewModel(private val repository: NewsRepository) : ViewModel() 
     private suspend fun fetchTopStories() {
         viewModelScope.launch(Dispatchers.IO) {
             val singleNews = repository.getTopStories()
-            if (singleNews.blockingGet() != null) {
-                topStoriesLiveData.postValue(Result.successData(singleNews.blockingGet()))
-            } else {
-                topStoriesLiveData.postValue(Result.errorData(null))
-            }
+            topStoriesLiveData.postValue(Result.successData(singleNews))
         }
     }
 
@@ -60,7 +54,7 @@ class TopStoriesViewModel(private val repository: NewsRepository) : ViewModel() 
         return topStoriesLiveData
     }
 
-    fun getTopStoriesNet() : LiveData<String> {
+    fun getTopStoriesNet(): LiveData<String> {
         return topStoriesLiveDataNet
     }
 

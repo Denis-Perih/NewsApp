@@ -16,19 +16,19 @@ class NewsRepositoryImpl(private val connectivityManager: ConnectivityManager) :
 
     private val apiKey = "AX61V3XwAl1cpB4ZM04aSr5Ae7Ax4SGF"
 
-    override suspend fun getMostPopular(): Single<PopularNews> {
+    override suspend fun getMostPopular(): PopularNews {
         return withContext(Dispatchers.IO) {
             NetworkServiceTabOneTwo
                 .getJSONApi()
-                .getMostPopular(apiKey)
+                .getMostPopular(apiKey).await()
         }
     }
 
-    override suspend fun getTopStories(): Single<StoriesNews> {
+    override suspend fun getTopStories(): StoriesNews {
         return withContext(Dispatchers.IO) {
             NetworkServiceTabOneTwo
                 .getJSONApi()
-                .getTopStories(apiKey)
+                .getTopStories(apiKey).await()
         }
     }
 
@@ -44,10 +44,10 @@ class NewsRepositoryImpl(private val connectivityManager: ConnectivityManager) :
         return false
     }
 
-    override suspend fun getHistoryStock(start_date: String, end_date: String): Single<HistoryStock> {
+    override suspend fun getHistoryStock(start_date: String, end_date: String): HistoryStock {
         return withContext(Dispatchers.IO) {
             NetworkServiceHistory
-                .getJSONApi().getHistoryStock(start_date, end_date)
+                .getJSONApi().getHistoryStock(start_date, end_date).await()
         }
     }
 }
