@@ -20,7 +20,7 @@ class HomeFragment : Fragment(R.layout.fr_home_screen), IOnBackPressed {
 
         bind = FrHomeScreenBinding.bind(view)
 
-        binding.vpPagerFragments.adapter = PageAdapter(requireActivity().supportFragmentManager)
+        binding.vpPagerFragments.adapter = PageAdapter(childFragmentManager)
         binding.tlTabsFragments.setupWithViewPager(binding.vpPagerFragments, false)
     }
 
