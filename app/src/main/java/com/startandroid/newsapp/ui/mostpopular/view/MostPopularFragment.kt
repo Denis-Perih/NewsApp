@@ -86,8 +86,8 @@ class MostPopularFragment : Fragment(R.layout.fr_most_popular), ItemForMostPopul
     }
 
     override fun openItemMoreDetails(popularNewsItem: PopularNewsItem) {
-        val fm = requireActivity().supportFragmentManager
-        fm.saveFragmentInstanceState(this)
+        val fm = parentFragment?.childFragmentManager
+        fm?.saveFragmentInstanceState(this)
         (requireActivity() as MainContract).openPopularNewsMoreFragment(popularNewsItem)
     }
 
