@@ -4,12 +4,14 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.startandroid.newsapp.data.model.PopularNews
 import com.startandroid.newsapp.data.repository.NewsRepository
 import com.startandroid.newsapp.utils.Result
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MostPopularViewModel(private val repository: NewsRepository) : ViewModel() {
 
@@ -18,25 +20,23 @@ class MostPopularViewModel(private val repository: NewsRepository) : ViewModel()
     private val compositeDisposable = CompositeDisposable()
 
     init {
-        if (repository.isNetConnected()) {
-            fetchMostPopular()
-        } else {
-            mostPopularLiveDataNet.postValue("Not net")
+        viewModelScope.launch {
+            if (repository.isNetConnected()) {
+                fetchMostPopular()
+            } else {
+                mostPopularLiveDataNet.postValue("Not net")
+            }
         }
     }
 
-    private fun fetchMostPopular() {
-        compositeDisposable.add(
-            repository.getMostPopular()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ news ->
-                    mostPopularLiveData.postValue(Result.successData(news))
-                    Log.d("TAG_BACK", "fetchMostPopular | liveData: $mostPopularLiveData")
-                }, { throwable ->
-                    mostPopularLiveData.postValue(Result.errorData(null))
-                })
-        )
+    private suspend fun fetchMostPopular() {
+            val singleNews = repository.getMostPopular()
+            if (singleNews != null) {
+                mostPopularLiveData.postValue(Result.successData(singleNews))
+                Log.d("TAG", "fetchMostPopular2: ${singleNews}")
+            } else {
+                mostPopularLiveData.postValue(Result.errorData(null))
+            }
     }
 
     fun getMostPopular(): LiveData<Result<PopularNews>> {

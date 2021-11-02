@@ -8,7 +8,7 @@ import com.startandroid.newsapp.ui.mostpopular.viewmodel.MostPopularViewModel
 
 class MostPopularViewModelFactory(private val connectivityManager: ConnectivityManager) : ViewModelProvider.Factory {
 
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(MostPopularViewModel::class.java)) {
             return MostPopularViewModel(NewsRepositoryImpl(connectivityManager)) as T
         }

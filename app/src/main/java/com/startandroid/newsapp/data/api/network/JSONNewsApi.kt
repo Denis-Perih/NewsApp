@@ -12,7 +12,7 @@ interface JSONNewsApi {
     fun getMostPopular(@Query("api-key") apiKey: String): Single<PopularNews>
 
     @GET("https://api.nytimes.com/svc/topstories/v2/home.json")
-    fun getTopStories(@Query("api-key") apiKey: String): Single<StoriesNews>
+    fun getTopStories(@Query("api-key") apiKey: String): StoriesNews
 
     @GET("WIKI/AAPL/data.json?api_key=xw3sqcPrQ42gQnuv4sJQ")
     fun getHistoryStock(@Query("start_date") start_date: String, @Query("end_date") end_date: String): Single<HistoryStock>

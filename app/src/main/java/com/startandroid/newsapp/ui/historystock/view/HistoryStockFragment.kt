@@ -12,6 +12,7 @@ import com.startandroid.newsapp.data.model.HistoryStockItem
 import com.startandroid.newsapp.databinding.FrHistoryStockBinding
 import com.startandroid.newsapp.ui.historystock.factory.HistoryStockViewModelFactory
 import com.startandroid.newsapp.ui.historystock.viewmodel.HistoryStockViewModel
+import com.startandroid.newsapp.ui.main.MainContract
 import com.startandroid.newsapp.utils.Status
 
 class HistoryStockFragment : Fragment(R.layout.fr_history_stock) {
@@ -45,16 +46,20 @@ class HistoryStockFragment : Fragment(R.layout.fr_history_stock) {
     }
 
     private fun setupObserver() {
-        historyStockViewModel.getHistory().observe(viewLifecycleOwner, Observer {
-            when(it.status) {
-                Status.SUCCESS -> {
-                    it.data?.let { it1 -> updateData(it1) }
+        if (historyStockViewModel.getHistoryStockNet().value == "Not net") {
+            (requireActivity() as MainContract).noNetConnected()
+        } else {
+            historyStockViewModel.getHistory().observe(viewLifecycleOwner, Observer {
+                when (it.status) {
+                    Status.SUCCESS -> {
+                        it.data?.let { it1 -> updateData(it1) }
+                    }
+                    Status.ERROR -> {
+                        // error UI
+                    }
                 }
-                Status.ERROR -> {
-                    // error UI
-                }
-            }
-        })
+            })
+        }
     }
 
     private fun updateData(data: HistoryStockItem) {

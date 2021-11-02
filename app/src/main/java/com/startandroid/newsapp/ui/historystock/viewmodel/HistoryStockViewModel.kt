@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.startandroid.newsapp.data.model.HistoryStockItem
 import com.startandroid.newsapp.data.repository.NewsRepository
 import com.startandroid.newsapp.utils.Result
@@ -11,6 +12,8 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -18,12 +21,19 @@ import java.util.concurrent.TimeUnit
 class HistoryStockViewModel(private val repository: NewsRepository) : ViewModel() {
 
     private val historyLiveData = MutableLiveData<Result<HistoryStockItem>>()
+    private val historyLiveDataNet = MutableLiveData<String>()
     private val compositeDisposable = CompositeDisposable()
 
     private val calendar = GregorianCalendar(1980, Calendar.DECEMBER, 12)
 
     init {
-        goRequestInterval()
+        viewModelScope.launch {
+            if (repository.isNetConnected()) {
+                goRequestInterval()
+            } else {
+                historyLiveDataNet.postValue("Not net")
+            }
+        }
     }
 
     @SuppressLint("SimpleDateFormat")
@@ -49,20 +59,22 @@ class HistoryStockViewModel(private val repository: NewsRepository) : ViewModel(
     }
 
     private fun fetchHistory(date: String) {
-        compositeDisposable.add(
-            repository.getHistoryStock(date, date)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ stories ->
-                    historyLiveData.postValue(Result.successData(stories.dataset_data))
-                }, { throwable ->
-                    historyLiveData.postValue(Result.errorData(null))
-                })
-        )
+        viewModelScope.launch(Dispatchers.IO) {
+            val singleDate = repository.getHistoryStock(date, date)
+            if (singleDate.blockingGet() != null) {
+                historyLiveData.postValue(Result.successData(singleDate.blockingGet().dataset_data))
+            } else {
+                historyLiveData.postValue(Result.errorData(null))
+            }
+        }
     }
 
     override fun onCleared() {
         compositeDisposable.dispose()
+    }
+
+    fun getHistoryStockNet() : LiveData<String> {
+        return historyLiveDataNet
     }
 
     fun getHistory(): LiveData<Result<HistoryStockItem>> {
