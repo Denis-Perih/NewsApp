@@ -8,7 +8,7 @@ import androidx.fragment.app.FragmentManager
 import com.startandroid.newsapp.R
 import com.startandroid.newsapp.databinding.FrHomeScreenBinding
 import com.startandroid.newsapp.ui.home.adapter.PageAdapter
-
+import com.startandroid.newsapp.utils.IOnBackPressed
 
 class HomeFragment : Fragment(R.layout.fr_home_screen), IOnBackPressed {
 
@@ -20,14 +20,14 @@ class HomeFragment : Fragment(R.layout.fr_home_screen), IOnBackPressed {
 
         bind = FrHomeScreenBinding.bind(view)
 
-        binding.vpPagerFragment.adapter = PageAdapter(requireActivity().supportFragmentManager)
-        binding.tlTabsFragment.setupWithViewPager(binding.vpPagerFragment)
+        binding.vpPagerFragments.adapter = PageAdapter(childFragmentManager)
+        binding.tlTabsFragments.setupWithViewPager(binding.vpPagerFragments, false)
     }
 
     override fun onBackPressed(): Boolean {
         val manager: FragmentManager = (context as AppCompatActivity)
             .supportFragmentManager
-        if (manager.getBackStackEntryCount() > 0) {
+        if (manager.backStackEntryCount > 0) {
             requireActivity().finish()
         }
         return true

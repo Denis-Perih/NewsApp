@@ -21,7 +21,11 @@ class MoreItemFragment : Fragment(R.layout.fr_more_screen) {
 
         binding.btnBackHome.setOnClickListener {
             val fm: FragmentManager = requireActivity().supportFragmentManager
-            fm.popBackStack(MoreItemFragment::class.simpleName, FragmentManager.POP_BACK_STACK_INCLUSIVE) }
+            fm.popBackStack(
+                MoreItemFragment::class.simpleName,
+                FragmentManager.POP_BACK_STACK_INCLUSIVE
+            )
+        }
 
         setDataToPost()
     }
@@ -33,11 +37,11 @@ class MoreItemFragment : Fragment(R.layout.fr_more_screen) {
             val storiesItem: StoriesNewsItem? = bundle.getParcelable("storiesNewsItem")
             if (popularNewsItem == null) {
                 binding.tvTitleMore.text = storiesItem?.title
-                binding.tvDateMore.text = storiesItem?.published_date
+                binding.tvDateMore.text = storiesItem?.published_date?.substring(0, 10)
                 binding.tvAbstract.text = storiesItem?.abstract
             } else {
                 binding.tvTitleMore.text = popularNewsItem.title
-                binding.tvDateMore.text = popularNewsItem.published_date
+                binding.tvDateMore.text = popularNewsItem.published_date?.substring(0, 10)
                 binding.tvAbstract.text = popularNewsItem.abstract
             }
         }

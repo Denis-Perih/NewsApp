@@ -15,10 +15,10 @@ import com.startandroid.newsapp.data.model.PopularNewsItem
 import com.startandroid.newsapp.data.model.StoriesNewsItem
 import com.startandroid.newsapp.databinding.ActivityMainBinding
 import com.startandroid.newsapp.ui.home.HomeFragment
-import com.startandroid.newsapp.ui.home.IOnBackPressed
 import com.startandroid.newsapp.ui.more.MoreItemFragment
 import com.startandroid.newsapp.ui.signin.view.SignInFragment
 import com.startandroid.newsapp.ui.splash.SplashFragment
+import com.startandroid.newsapp.utils.IOnBackPressed
 
 @RequiresApi(Build.VERSION_CODES.M)
 class MainActivity : AppCompatActivity(), MainContract {
@@ -30,7 +30,6 @@ class MainActivity : AppCompatActivity(), MainContract {
         super.onCreate(savedInstanceState)
 
         bind = ActivityMainBinding.inflate(layoutInflater)
-//        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         with(binding.srlNoNetConnection) {
@@ -49,7 +48,6 @@ class MainActivity : AppCompatActivity(), MainContract {
         val fragment = supportFragmentManager.findFragmentById(R.id.mainFragmentContainer)
         if (fragment !is IOnBackPressed || !(fragment as IOnBackPressed).onBackPressed()) {
             super.onBackPressed()
-
         }
     }
 
@@ -75,13 +73,13 @@ class MainActivity : AppCompatActivity(), MainContract {
     fun startApp() = if (isNetConnected()) {
         binding.srlNoNetConnection.visibility = View.INVISIBLE
         binding.mainFragmentContainer.visibility = View.VISIBLE
-        openFragment(SplashFragment())
+        openSimpleFragment(SplashFragment())
     } else {
         binding.mainFragmentContainer.visibility = View.INVISIBLE
         binding.srlNoNetConnection.visibility = View.VISIBLE
     }
 
-    private fun openFragment(newFragment: Fragment) {
+    private fun openSimpleFragment(newFragment: Fragment) {
         val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
             .setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
             .replace(R.id.mainFragmentContainer, newFragment, newFragment::class.java.simpleName)
@@ -90,12 +88,21 @@ class MainActivity : AppCompatActivity(), MainContract {
         transaction.commit()
     }
 
+    private fun openMoreFragment(newFragment: Fragment) {
+        val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
+            .setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
+            .add(R.id.mainFragmentContainer, newFragment, newFragment::class.java.simpleName)
+            .addToBackStack(newFragment::class.java.simpleName)
+
+        transaction.commit()
+    }
+
     override fun openHomeFragment() {
-        openFragment(HomeFragment())
+        openSimpleFragment(HomeFragment())
     }
 
     override fun openSignInFragment() {
-        openFragment(SignInFragment())
+        openSimpleFragment(SignInFragment())
     }
 
     override fun noNetConnected() {
@@ -111,7 +118,7 @@ class MainActivity : AppCompatActivity(), MainContract {
         val fragment: Fragment = MoreItemFragment()
         fragment.arguments = bundle
 
-        openFragment(fragment)
+        openMoreFragment(fragment)
     }
 
     override fun openTopStoriesMoreFragment(storiesNewsItem: StoriesNewsItem) {
@@ -121,7 +128,7 @@ class MainActivity : AppCompatActivity(), MainContract {
         val fragment: Fragment = MoreItemFragment()
         fragment.arguments = bundle
 
-        openFragment(fragment)
+        openMoreFragment(fragment)
     }
 
     override fun onDestroy() {

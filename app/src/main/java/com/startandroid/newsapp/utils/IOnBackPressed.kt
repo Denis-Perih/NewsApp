@@ -1,4 +1,4 @@
-package com.startandroid.newsapp.ui.home
+package com.startandroid.newsapp.utils
 
 interface IOnBackPressed {
 

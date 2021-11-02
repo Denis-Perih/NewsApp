@@ -1,12 +1,11 @@
 package com.startandroid.newsapp.ui.mostpopular.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.startandroid.newsapp.data.model.PopularNews
-import com.startandroid.newsapp.data.model.PopularNewsItem
 import com.startandroid.newsapp.data.repository.NewsRepository
-import com.startandroid.newsapp.ui.mostpopular.ItemForMostPopular
 import com.startandroid.newsapp.utils.Result
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -33,6 +32,7 @@ class MostPopularViewModel(private val repository: NewsRepository) : ViewModel()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ news ->
                     mostPopularLiveData.postValue(Result.successData(news))
+                    Log.d("TAG_BACK", "fetchMostPopular | liveData: $mostPopularLiveData")
                 }, { throwable ->
                     mostPopularLiveData.postValue(Result.errorData(null))
                 })
@@ -40,6 +40,7 @@ class MostPopularViewModel(private val repository: NewsRepository) : ViewModel()
     }
 
     fun getMostPopular(): LiveData<Result<PopularNews>> {
+        Log.d("TAG_BACK", "getMostPopular | liveData: $mostPopularLiveData")
         return mostPopularLiveData
     }
 

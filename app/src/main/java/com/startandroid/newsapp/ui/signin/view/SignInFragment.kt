@@ -4,7 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -15,9 +17,10 @@ import com.startandroid.newsapp.databinding.FrSignInScreenBinding
 import com.startandroid.newsapp.ui.main.MainContract
 import com.startandroid.newsapp.ui.signin.factory.SignInViewModelFactory
 import com.startandroid.newsapp.ui.signin.viewmodel.SignInViewModel
+import com.startandroid.newsapp.utils.IOnBackPressed
 import com.startandroid.newsapp.utils.Status
 
-class SignInFragment : Fragment(R.layout.fr_sign_in_screen){
+class SignInFragment : Fragment(R.layout.fr_sign_in_screen), IOnBackPressed {
 
     private var bind: FrSignInScreenBinding? = null
     private val binding get() = bind!!
@@ -83,10 +86,23 @@ class SignInFragment : Fragment(R.layout.fr_sign_in_screen){
                     (requireActivity() as MainContract).openHomeFragment()
                 }
                 Status.ERROR -> {
-                    Snackbar.make(binding.clFragmentLoginScreen, "error account", Snackbar.LENGTH_SHORT).show()
+                    Snackbar.make(
+                        binding.clFragmentLoginScreen,
+                        "error account",
+                        Snackbar.LENGTH_SHORT
+                    ).show()
                 }
             }
         })
+    }
+
+    override fun onBackPressed(): Boolean {
+        val manager: FragmentManager = (context as AppCompatActivity)
+            .supportFragmentManager
+        if (manager.getBackStackEntryCount() > 0) {
+            requireActivity().finish()
+        }
+        return true
     }
 
     override fun onDestroyView() {

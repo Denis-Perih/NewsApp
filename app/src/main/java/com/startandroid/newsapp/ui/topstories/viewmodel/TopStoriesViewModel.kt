@@ -1,10 +1,10 @@
 package com.startandroid.newsapp.ui.topstories.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.startandroid.newsapp.data.model.StoriesNews
-import com.startandroid.newsapp.data.model.StoriesNewsItem
 import com.startandroid.newsapp.data.repository.NewsRepository
 import com.startandroid.newsapp.utils.Result
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -15,7 +15,6 @@ class TopStoriesViewModel(private val repository: NewsRepository) : ViewModel() 
 
     private val topStoriesLiveData = MutableLiveData<Result<StoriesNews>>()
     private val topStoriesLiveDataNet = MutableLiveData<String>()
-    private val topStoriesLiveDataItemNews = MutableLiveData<StoriesNewsItem>()
     private val compositeDisposable = CompositeDisposable()
 
     init {
@@ -33,6 +32,7 @@ class TopStoriesViewModel(private val repository: NewsRepository) : ViewModel() 
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ news ->
                     topStoriesLiveData.postValue(Result.successData(news))
+                    Log.d("TAG_BACK", "fetchTopStories | liveData: $topStoriesLiveData")
                 }, { throwable ->
                     topStoriesLiveData.postValue(Result.errorData(null))
                 })
@@ -40,6 +40,7 @@ class TopStoriesViewModel(private val repository: NewsRepository) : ViewModel() 
     }
 
     fun getTopStories(): LiveData<Result<StoriesNews>> {
+        Log.d("TAG_BACK", "getTopStories | liveData: $topStoriesLiveData")
         return topStoriesLiveData
     }
 
