@@ -6,7 +6,7 @@ import com.startandroid.newsapp.ui.signin.viewmodel.SignInViewModel
 
 class SignInViewModelFactory() : ViewModelProvider.Factory {
 
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(SignInViewModel::class.java)) {
             return SignInViewModel() as T
         }

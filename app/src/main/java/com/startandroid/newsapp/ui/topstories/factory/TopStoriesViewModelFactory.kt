@@ -9,7 +9,7 @@ import com.startandroid.newsapp.ui.topstories.viewmodel.TopStoriesViewModel
 
 class TopStoriesViewModelFactory(private val connectivityManager: ConnectivityManager) : ViewModelProvider.Factory {
 
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(TopStoriesViewModel::class.java)) {
             return TopStoriesViewModel(NewsRepositoryImpl(connectivityManager)) as T
         }
