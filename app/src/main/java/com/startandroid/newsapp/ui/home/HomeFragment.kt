@@ -9,7 +9,9 @@ import com.startandroid.newsapp.R
 import com.startandroid.newsapp.databinding.FrHomeScreenBinding
 import com.startandroid.newsapp.ui.home.adapter.PageAdapter
 import com.startandroid.newsapp.utils.IOnBackPressed
+import kotlinx.coroutines.InternalCoroutinesApi
 
+@InternalCoroutinesApi
 class HomeFragment : Fragment(R.layout.fr_home_screen), IOnBackPressed {
 
     private var bind: FrHomeScreenBinding? = null

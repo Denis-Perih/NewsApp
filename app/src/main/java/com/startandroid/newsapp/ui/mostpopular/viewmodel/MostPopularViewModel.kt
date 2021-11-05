@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.startandroid.newsapp.data.model.PopularNews
-import com.startandroid.newsapp.data.repository.NewsRepository
+import com.startandroid.newsapp.data.repository.repositorynews.NewsRepository
 import com.startandroid.newsapp.utils.Result
 import kotlinx.coroutines.launch
 

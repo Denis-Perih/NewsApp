@@ -1,4 +1,4 @@
-package com.startandroid.newsapp.data.repository
+package com.startandroid.newsapp.data.repository.repositorynews
 
 import android.net.ConnectivityManager
 import android.os.Build

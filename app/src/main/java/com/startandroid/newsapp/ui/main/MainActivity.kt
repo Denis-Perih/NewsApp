@@ -19,7 +19,9 @@ import com.startandroid.newsapp.ui.more.MoreItemFragment
 import com.startandroid.newsapp.ui.signin.view.SignInFragment
 import com.startandroid.newsapp.ui.splash.SplashFragment
 import com.startandroid.newsapp.utils.IOnBackPressed
+import kotlinx.coroutines.InternalCoroutinesApi
 
+@InternalCoroutinesApi
 @RequiresApi(Build.VERSION_CODES.M)
 class MainActivity : AppCompatActivity(), MainContract {
 
