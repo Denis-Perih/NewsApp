@@ -3,14 +3,16 @@ package com.startandroid.newsapp.data.repository.repositoryflow
 import com.startandroid.newsapp.data.repository.service.UsingFlowService
 import kotlinx.coroutines.flow.Flow
 
-class UsingFlowRepositoryImpl(private val service: UsingFlowService): UsingFlowRepository {
+class UsingFlowRepositoryImpl(private val service: UsingFlowService) : UsingFlowRepository {
 
-    override suspend fun checkInternet(): Flow<Boolean> {
-        return service.checkInternet()
-    }
+    override val connectionStateFlow: Flow<Boolean> = service.connectionStateFlow
 
-    override suspend fun checkLocation(): Flow<String> {
-        TODO("Not yet implemented")
-    }
+    override fun fetchInternetConnectionState() =
+        service.fetchInternetConnectionState()
+
+    override val locationStateFlow: Flow<String> = service.locationStateFlow
+
+    override fun fetchLocationState() =
+        service.fetchLocationState()
 
 }

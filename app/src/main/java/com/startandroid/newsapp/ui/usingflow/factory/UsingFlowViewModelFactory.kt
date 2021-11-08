@@ -12,14 +12,15 @@ import kotlinx.coroutines.InternalCoroutinesApi
 @InternalCoroutinesApi
 class UsingFlowViewModelFactory(
     private val connectivityManager: ConnectivityManager,
-    private val locationManager: LocationManager
+    private val locationManager: LocationManager?
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(UsingFlowViewModel::class.java)) {
             return UsingFlowViewModel(
                 UsingFlowRepositoryImpl(
                     UsingFlowServiceImpl(
-                        connectivityManager, locationManager
+                        connectivityManager,
+                        locationManager
                     )
                 )
             ) as T

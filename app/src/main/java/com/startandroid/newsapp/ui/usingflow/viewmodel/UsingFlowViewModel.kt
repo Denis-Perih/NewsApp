@@ -1,39 +1,50 @@
 package com.startandroid.newsapp.ui.usingflow.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.startandroid.newsapp.data.repository.repositoryflow.UsingFlowRepository
-import kotlinx.coroutines.launch
 import com.startandroid.newsapp.utils.Result
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.async
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 @InternalCoroutinesApi
 class UsingFlowViewModel(private val repository: UsingFlowRepository) : ViewModel() {
 
-    private val _uiState: MutableStateFlow<Result<Boolean>> =
+    private val _uiStateNet: MutableStateFlow<Result<Boolean>> =
         MutableStateFlow(Result.successData(false))
-    val state = _uiState.asSharedFlow()
+    val stateNet = _uiStateNet.asSharedFlow()
+
+    private val _uiStateLocation: MutableStateFlow<Result<String>> =
+        MutableStateFlow(Result.successData("Location"))
+    val stateLocation = _uiStateLocation.asSharedFlow()
 
     init {
-        viewModelScope.launch {
-            async(Dispatchers.IO) { fetchInternet() }
-            async(Dispatchers.IO) { fetchLocation() }
+        viewModelScope.launch(Dispatchers.IO) {
+            async { repository.fetchInternetConnectionState()
+                observeInternetConnectionState() }
+            async { observeLocationState() }
         }
     }
 
-    private suspend fun fetchInternet() {
-        repository.checkInternet()
-            .flowOn(Dispatchers.IO)
-            .catch { _uiState.value = Result.errorData(true) }
-            .collect { status -> _uiState.value = Result.successData(status)
-                Log.d("TAGING", "fetchInternet: $status") }
+    private suspend fun observeInternetConnectionState() {
+        repository.connectionStateFlow
+            .collect { isConnected ->
+                _uiStateNet.value = Result.successData(isConnected) }
     }
 
-    private suspend fun fetchLocation() {
+    fun fetchLocationState() {
+        repository.fetchLocationState()
+    }
 
+    private suspend fun observeLocationState() {
+        repository.locationStateFlow
+            .collect { location ->
+                _uiStateLocation.value = Result.successData(location)
+            }
     }
 }

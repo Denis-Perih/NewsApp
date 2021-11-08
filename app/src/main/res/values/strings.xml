@@ -21,4 +21,7 @@
     <string name="using_flow">Using Flow</string>
     <string name="internet_status">Internet status:</string>
     <string name="location">Location:</string>
+    <string name="location_value">You have banned the use of your location</string>
+    <string name="connected">Connected</string>
+    <string name="no_connected">No Connected</string>
 </resources>

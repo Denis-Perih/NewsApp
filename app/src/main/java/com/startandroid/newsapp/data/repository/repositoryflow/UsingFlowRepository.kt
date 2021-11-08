@@ -4,7 +4,11 @@ import kotlinx.coroutines.flow.Flow
 
 interface UsingFlowRepository {
 
-    suspend fun checkInternet(): Flow<Boolean>
+    val connectionStateFlow: Flow<Boolean>
 
-    suspend fun checkLocation(): Flow<String>
+    fun fetchInternetConnectionState()
+
+    val locationStateFlow: Flow<String>
+
+    fun fetchLocationState()
 }

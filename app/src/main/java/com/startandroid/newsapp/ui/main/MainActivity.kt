@@ -60,16 +60,17 @@ class MainActivity : AppCompatActivity(), MainContract {
     }
 
     private fun isNetConnected(): Boolean {
-        val connectManager =
-            baseContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        if (connectManager != null) {
-            val capabilities =
-                connectManager.getNetworkCapabilities(connectManager.activeNetwork)
-            if (capabilities != null) {
-                return true
-            }
-        }
-        return false
+//        val connectManager =
+//            baseContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+//        if (connectManager != null) {
+//            val capabilities =
+//                connectManager.getNetworkCapabilities(connectManager.activeNetwork)
+//            if (capabilities != null) {
+//                return true
+//            }
+//        }
+//        return false
+        return true
     }
 
     fun startApp() = if (isNetConnected()) {
