@@ -1,4 +1,4 @@
-package com.startandroid.newsapp.data.repository
+package com.startandroid.newsapp.data.repository.repositorynews
 
 import com.startandroid.newsapp.data.model.HistoryStock
 import com.startandroid.newsapp.data.model.PopularNews

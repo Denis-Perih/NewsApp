@@ -3,7 +3,7 @@ package com.startandroid.newsapp.ui.historystock.factory
 import android.net.ConnectivityManager
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.startandroid.newsapp.data.repository.NewsRepositoryImpl
+import com.startandroid.newsapp.data.repository.repositorynews.NewsRepositoryImpl
 import com.startandroid.newsapp.ui.historystock.viewmodel.HistoryStockViewModel
 
 class HistoryStockViewModelFactory(private val connectivityManager: ConnectivityManager) : ViewModelProvider.Factory {

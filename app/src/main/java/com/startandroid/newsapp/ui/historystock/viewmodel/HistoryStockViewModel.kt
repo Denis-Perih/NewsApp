@@ -6,11 +6,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.startandroid.newsapp.data.model.HistoryStockItem
-import com.startandroid.newsapp.data.repository.NewsRepository
+import com.startandroid.newsapp.data.repository.repositorynews.NewsRepository
 import com.startandroid.newsapp.utils.Result
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ObsoleteCoroutinesApi
-import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.channels.ticker
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat

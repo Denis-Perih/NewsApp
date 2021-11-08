@@ -19,7 +19,9 @@ import com.startandroid.newsapp.ui.more.MoreItemFragment
 import com.startandroid.newsapp.ui.signin.view.SignInFragment
 import com.startandroid.newsapp.ui.splash.SplashFragment
 import com.startandroid.newsapp.utils.IOnBackPressed
+import kotlinx.coroutines.InternalCoroutinesApi
 
+@InternalCoroutinesApi
 @RequiresApi(Build.VERSION_CODES.M)
 class MainActivity : AppCompatActivity(), MainContract {
 
@@ -58,16 +60,17 @@ class MainActivity : AppCompatActivity(), MainContract {
     }
 
     private fun isNetConnected(): Boolean {
-        val connectManager =
-            baseContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        if (connectManager != null) {
-            val capabilities =
-                connectManager.getNetworkCapabilities(connectManager.activeNetwork)
-            if (capabilities != null) {
-                return true
-            }
-        }
-        return false
+//        val connectManager =
+//            baseContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+//        if (connectManager != null) {
+//            val capabilities =
+//                connectManager.getNetworkCapabilities(connectManager.activeNetwork)
+//            if (capabilities != null) {
+//                return true
+//            }
+//        }
+//        return false
+        return true
     }
 
     fun startApp() = if (isNetConnected()) {
