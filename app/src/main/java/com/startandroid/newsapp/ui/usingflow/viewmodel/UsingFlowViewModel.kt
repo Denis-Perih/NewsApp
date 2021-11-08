@@ -6,10 +6,10 @@ import com.startandroid.newsapp.data.repository.repositoryflow.UsingFlowReposito
 import com.startandroid.newsapp.utils.Result
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.InternalCoroutinesApi
-import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 @InternalCoroutinesApi
@@ -25,26 +25,25 @@ class UsingFlowViewModel(private val repository: UsingFlowRepository) : ViewMode
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            async { repository.fetchInternetConnectionState()
-                observeInternetConnectionState() }
-            async { observeLocationState() }
+            repository.fetchInternetConnectionState()
         }
+        observeInternetConnectionState()
+        observeLocationState()
     }
 
-    private suspend fun observeInternetConnectionState() {
+    private fun observeInternetConnectionState() {
         repository.connectionStateFlow
-            .collect { isConnected ->
-                _uiStateNet.value = Result.successData(isConnected) }
+            .onEach { _uiStateNet.value = Result.successData(it) }
+            .launchIn(viewModelScope)
     }
 
     fun fetchLocationState() {
         repository.fetchLocationState()
     }
 
-    private suspend fun observeLocationState() {
+    private fun observeLocationState() {
         repository.locationStateFlow
-            .collect { location ->
-                _uiStateLocation.value = Result.successData(location)
-            }
+            .onEach { _uiStateLocation.value = Result.successData(it) }
+            .launchIn(viewModelScope)
     }
 }

@@ -16,11 +16,9 @@ import com.startandroid.newsapp.R
 import com.startandroid.newsapp.databinding.FrUsingFlowBinding
 import com.startandroid.newsapp.ui.usingflow.factory.UsingFlowViewModelFactory
 import com.startandroid.newsapp.ui.usingflow.viewmodel.UsingFlowViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.InternalCoroutinesApi
-import kotlinx.coroutines.async
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 @InternalCoroutinesApi
 class UsingFlowFragment() : Fragment(R.layout.fr_using_flow) {
@@ -58,18 +56,17 @@ class UsingFlowFragment() : Fragment(R.layout.fr_using_flow) {
     }
 
     private fun setupFlow() {
-        lifecycleScope.launch {
-            async { usingFlowViewModel.stateLocation.collect { state ->
-                binding.tvLocationValue.text = state.data
-            } }
-            async { usingFlowViewModel.stateNet.collect { state ->
-                if (state.data == true) {
-                    binding.tvNetValue.setText(R.string.connected)
-                } else {
-                    binding.tvNetValue.setText(R.string.no_connected)
-                }
-            } }
-        }
+        usingFlowViewModel.stateLocation
+            .onEach { binding.tvLocationValue.text = it.data }
+            .launchIn(lifecycleScope)
+
+        usingFlowViewModel.stateNet
+            .onEach {
+                when (it.data == true) {
+                    true -> binding.tvNetValue.setText(R.string.connected)
+                    false -> binding.tvNetValue.setText(R.string.no_connected)
+                } }
+            .launchIn(lifecycleScope)
     }
 
     private fun setupLocation() {
