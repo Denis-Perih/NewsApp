@@ -1,8 +1,6 @@
 package com.startandroid.newsapp.ui.main
 
-import android.content.Context
 import android.content.Intent
-import android.net.ConnectivityManager
 import android.os.Build
 import android.os.Bundle
 import android.view.View

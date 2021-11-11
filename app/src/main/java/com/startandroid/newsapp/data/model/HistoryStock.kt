@@ -6,7 +6,7 @@ import kotlinx.android.parcel.Parcelize
 
 data class HistoryStock(
     @SerializedName("dataset_data")
-    val dataset_data: HistoryStockItem
+    val dataset_data: HistoryStockItem?
 )
 
 @Parcelize

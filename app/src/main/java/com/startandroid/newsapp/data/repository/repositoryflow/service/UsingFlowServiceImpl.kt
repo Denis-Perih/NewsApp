@@ -1,4 +1,4 @@
-package com.startandroid.newsapp.data.repository.service
+package com.startandroid.newsapp.data.repository.repositoryflow.service
 
 import android.location.Location
 import android.location.LocationListener
@@ -12,8 +12,9 @@ import androidx.annotation.RequiresApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import javax.inject.Inject
 
-class UsingFlowServiceImpl(
+class UsingFlowServiceImpl @Inject constructor(
     private val connectivityManager: ConnectivityManager,
     private val locationManager: LocationManager?
 ) : UsingFlowService {

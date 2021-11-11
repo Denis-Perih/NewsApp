@@ -1,12 +1,13 @@
 package com.startandroid.newsapp.ui.historystock.viewmodel
 
+import android.accounts.NetworkErrorException
 import android.annotation.SuppressLint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.startandroid.newsapp.data.model.HistoryStockItem
-import com.startandroid.newsapp.data.repository.repositorynews.NewsRepository
+import com.startandroid.newsapp.data.repository.repositoryhistorystock.HistoryStockRepository
 import com.startandroid.newsapp.utils.Result
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ObsoleteCoroutinesApi
@@ -14,11 +15,12 @@ import kotlinx.coroutines.channels.ticker
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
+import javax.inject.Inject
 
-class HistoryStockViewModel(private val repository: NewsRepository) : ViewModel() {
+@ObsoleteCoroutinesApi
+class HistoryStockViewModel (private val repository: HistoryStockRepository) : ViewModel() {
 
     private val historyLiveData = MutableLiveData<Result<HistoryStockItem>>()
-    private val historyLiveDataNet = MutableLiveData<String>()
 
     private val calendar = GregorianCalendar(1980, Calendar.DECEMBER, 12)
 
@@ -26,15 +28,10 @@ class HistoryStockViewModel(private val repository: NewsRepository) : ViewModel(
 
     init {
         viewModelScope.launch {
-            if (repository.isNetConnected()) {
-                goRequestTicker()
-            } else {
-                historyLiveDataNet.postValue("Not net")
-            }
+            goRequestTicker()
         }
     }
 
-    @ObsoleteCoroutinesApi
     @SuppressLint("SimpleDateFormat")
     private suspend fun goRequestTicker() {
         for (event in tickerChannel) {
@@ -50,27 +47,23 @@ class HistoryStockViewModel(private val repository: NewsRepository) : ViewModel(
         }
     }
 
-    private suspend fun fetchHistory(date: String) {
+    private fun fetchHistory(date: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            val historyStockData = repository.getHistoryStock(date, date)
-            if (historyStockData != null) {
+            try {
+                val historyStockData = repository.getHistoryStock(date)
                 historyLiveData.postValue(Result.successData(historyStockData.dataset_data))
-            } else {
+            }catch (ex: NetworkErrorException){
                 historyLiveData.postValue(Result.errorData(null))
             }
         }
     }
 
+    fun getHistory(): LiveData<Result<HistoryStockItem>> {
+        return historyLiveData
+    }
+
     override fun onCleared() {
         super.onCleared()
         tickerChannel.cancel()
-    }
-
-    fun getHistoryStockNet() : LiveData<String> {
-        return historyLiveDataNet
-    }
-
-    fun getHistory(): LiveData<Result<HistoryStockItem>> {
-        return historyLiveData
     }
 }
