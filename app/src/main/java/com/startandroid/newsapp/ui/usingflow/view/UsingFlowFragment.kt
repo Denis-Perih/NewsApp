@@ -10,49 +10,45 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.startandroid.newsapp.R
+import com.startandroid.newsapp.data.api.states.di.ApplicationContextModule
 import com.startandroid.newsapp.databinding.FrUsingFlowBinding
+import com.startandroid.newsapp.ui.usingflow.di.DaggerUsingFlowComponent
 import com.startandroid.newsapp.ui.usingflow.factory.UsingFlowViewModelFactory
 import com.startandroid.newsapp.ui.usingflow.viewmodel.UsingFlowViewModel
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import javax.inject.Inject
 
 @InternalCoroutinesApi
 class UsingFlowFragment() : Fragment(R.layout.fr_using_flow) {
 
-    private var locationManager: LocationManager? = null
-
     private var bind: FrUsingFlowBinding? = null
     private val binding get() = bind!!
 
-    private lateinit var usingFlowViewModel: UsingFlowViewModel
-    private lateinit var connectivityManager: ConnectivityManager
+    @Inject
+    lateinit var usingFlowViewModelFactory: UsingFlowViewModelFactory
+
+    private val usingFlowViewModel: UsingFlowViewModel by viewModels { usingFlowViewModelFactory }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        val daggerUsingFlowComponent = DaggerUsingFlowComponent
+            .builder()
+            .applicationContextModule(ApplicationContextModule(requireContext()))
+            .build()
+        daggerUsingFlowComponent.injectUsingFlowFragment(this)
+        super.onCreate(savedInstanceState)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         bind = FrUsingFlowBinding.bind(view)
 
-        setupUI()
-        setupViewModel()
         setupFlow()
         setupLocation()
-    }
-
-    private fun setupUI() {
-        connectivityManager = requireActivity().applicationContext
-            .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-
-        locationManager = requireActivity().getSystemService(LOCATION_SERVICE) as LocationManager?
-    }
-
-    private fun setupViewModel() {
-        usingFlowViewModel = ViewModelProviders.of(
-            this,
-            UsingFlowViewModelFactory(connectivityManager, locationManager)
-        )[UsingFlowViewModel::class.java]
     }
 
     private fun setupFlow() {

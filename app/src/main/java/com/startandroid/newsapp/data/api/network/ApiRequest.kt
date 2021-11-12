@@ -3,11 +3,10 @@ package com.startandroid.newsapp.data.api.network
 import com.startandroid.newsapp.data.model.HistoryStock
 import com.startandroid.newsapp.data.model.PopularNews
 import com.startandroid.newsapp.data.model.StoriesNews
-import kotlinx.coroutines.Deferred
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface JSONNewsApi {
+interface ApiRequest {
     @GET("https://api.nytimes.com/svc/mostpopular/v2/shared/1.json")
     suspend fun getMostPopular(@Query("api-key") apiKey: String): PopularNews
 

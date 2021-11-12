@@ -1,65 +1,58 @@
 package com.startandroid.newsapp.ui.historystock.view
 
-import android.content.Context
-import android.net.ConnectivityManager
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import com.startandroid.newsapp.R
 import com.startandroid.newsapp.data.model.HistoryStockItem
 import com.startandroid.newsapp.databinding.FrHistoryStockBinding
+import com.startandroid.newsapp.ui.historystock.di.DaggerHistoryStockComponent
 import com.startandroid.newsapp.ui.historystock.factory.HistoryStockViewModelFactory
 import com.startandroid.newsapp.ui.historystock.viewmodel.HistoryStockViewModel
-import com.startandroid.newsapp.ui.main.MainContract
 import com.startandroid.newsapp.utils.Status
+import kotlinx.coroutines.ObsoleteCoroutinesApi
+import javax.inject.Inject
 
+@ObsoleteCoroutinesApi
 class HistoryStockFragment : Fragment(R.layout.fr_history_stock) {
 
     private var bind: FrHistoryStockBinding? = null
     private val binding get() = bind!!
 
-    private lateinit var historyStockViewModel: HistoryStockViewModel
-    private lateinit var connectivityManager: ConnectivityManager
+    @Inject
+    lateinit var viewModelFactory: HistoryStockViewModelFactory
+
+    private val historyStockViewModel: HistoryStockViewModel by viewModels {viewModelFactory}
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        val daggerHistoryStockComponent = DaggerHistoryStockComponent
+            .builder()
+            .build()
+        daggerHistoryStockComponent.injectHistoryStockFragment(this)
+        super.onCreate(savedInstanceState)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         bind = FrHistoryStockBinding.bind(view)
 
-        setupUI()
-        setupViewModel()
         setupObserver()
     }
 
-    private fun setupUI() {
-        connectivityManager = requireActivity().applicationContext
-            .getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-    }
-
-    private fun setupViewModel() {
-        historyStockViewModel = ViewModelProviders.of(
-            this,
-            HistoryStockViewModelFactory(connectivityManager)
-        ).get(HistoryStockViewModel::class.java)
-    }
-
     private fun setupObserver() {
-        if (historyStockViewModel.getHistoryStockNet().value == "Not net") {
-            (requireActivity() as MainContract).noNetConnected()
-        } else {
-            historyStockViewModel.getHistory().observe(viewLifecycleOwner, Observer {
-                when (it.status) {
-                    Status.SUCCESS -> {
-                        it.data?.let { it1 -> updateData(it1) }
-                    }
-                    Status.ERROR -> {
-                        // error UI
-                    }
+        historyStockViewModel.getHistory().observe(viewLifecycleOwner, Observer {
+            when (it.status) {
+                Status.SUCCESS -> {
+                    it.data?.let { it1 -> updateData(it1) }
                 }
-            })
-        }
+                Status.ERROR -> {
+                    // error UI
+                }
+            }
+        })
     }
 
     private fun updateData(data: HistoryStockItem) {

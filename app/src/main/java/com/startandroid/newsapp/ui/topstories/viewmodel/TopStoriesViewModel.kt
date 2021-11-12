@@ -1,35 +1,33 @@
 package com.startandroid.newsapp.ui.topstories.viewmodel
 
+import android.accounts.NetworkErrorException
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.startandroid.newsapp.data.model.StoriesNews
-import com.startandroid.newsapp.data.repository.repositorynews.NewsRepository
+import com.startandroid.newsapp.data.repository.repositorymostpopular.MostPopularRepository
+import com.startandroid.newsapp.data.repository.repositorytopstories.TopStoriesRepository
 import com.startandroid.newsapp.utils.Result
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class TopStoriesViewModel(private val repository: NewsRepository) : ViewModel() {
+class TopStoriesViewModel (private val repository: TopStoriesRepository) : ViewModel() {
 
     private val topStoriesLiveData = MutableLiveData<Result<StoriesNews>>()
-    private val topStoriesLiveDataNet = MutableLiveData<String>()
 
     init {
         viewModelScope.launch() {
-            if (repository.isNetConnected()) {
-                fetchTopStories()
-            } else {
-                topStoriesLiveDataNet.postValue("Not net")
-            }
+            fetchTopStories()
         }
     }
 
     private suspend fun fetchTopStories() {
-        val topStoriesData = repository.getTopStories()
-        if (topStoriesData != null) {
+        try {
+            val topStoriesData = repository.getTopStories()
             topStoriesLiveData.postValue(Result.successData(topStoriesData))
-        } else {
+        }catch (ex: NetworkErrorException){
             topStoriesLiveData.postValue(Result.errorData(null))
         }
     }
@@ -37,9 +35,5 @@ class TopStoriesViewModel(private val repository: NewsRepository) : ViewModel() 
     fun getTopStories(): LiveData<Result<StoriesNews>> {
         Log.d("TAG_BACK", "getTopStories | liveData: $topStoriesLiveData")
         return topStoriesLiveData
-    }
-
-    fun getTopStoriesNet(): LiveData<String> {
-        return topStoriesLiveDataNet
     }
 }

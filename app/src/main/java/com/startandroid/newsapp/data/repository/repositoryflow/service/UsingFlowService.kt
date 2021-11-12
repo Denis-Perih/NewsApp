@@ -1,4 +1,4 @@
-package com.startandroid.newsapp.data.repository.service
+package com.startandroid.newsapp.data.repository.repositoryflow.service
 
 import kotlinx.coroutines.flow.Flow
 
