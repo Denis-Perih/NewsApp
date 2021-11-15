@@ -2,8 +2,7 @@ package com.startandroid.newsapp.data.api.network.di
 
 import com.startandroid.newsapp.data.api.network.ApiRequest
 import com.startandroid.newsapp.utils.qualifier.*
-import com.startandroid.newsapp.utils.scope.HistoryStockFragmentScope
-import com.startandroid.newsapp.utils.scope.NewsFragmentScope
+import com.startandroid.newsapp.utils.scope.ApplicationScope
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -19,7 +18,7 @@ class NetworkServiceModule {
         return retrofitHistory.create(ApiRequest::class.java)
     }
 
-    @HistoryStockFragmentScope
+    @ApplicationScope
     @RetrofitHistoryStock
     @Provides
     fun retrofitHistory(
@@ -39,7 +38,7 @@ class NetworkServiceModule {
         return retrofitNews.create(ApiRequest::class.java)
     }
 
-    @NewsFragmentScope
+    @ApplicationScope
     @RetrofitNews
     @Provides
     fun retrofitNews(

@@ -6,12 +6,15 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.startandroid.newsapp.R
+import com.startandroid.newsapp.data.application.DaggerNewsAppApplicationComponent
+import com.startandroid.newsapp.data.application.NewsAppApplicationComponent
+import com.startandroid.newsapp.data.application.NewsApplication
 import com.startandroid.newsapp.data.model.HistoryStockItem
 import com.startandroid.newsapp.databinding.FrHistoryStockBinding
-import com.startandroid.newsapp.ui.historystock.di.DaggerHistoryStockComponent
 import com.startandroid.newsapp.ui.historystock.factory.HistoryStockViewModelFactory
 import com.startandroid.newsapp.ui.historystock.viewmodel.HistoryStockViewModel
 import com.startandroid.newsapp.utils.Status
+import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.ObsoleteCoroutinesApi
 import javax.inject.Inject
 
@@ -27,10 +30,7 @@ class HistoryStockFragment : Fragment(R.layout.fr_history_stock) {
     private val historyStockViewModel: HistoryStockViewModel by viewModels {viewModelFactory}
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        val daggerHistoryStockComponent = DaggerHistoryStockComponent
-            .builder()
-            .build()
-        daggerHistoryStockComponent.injectHistoryStockFragment(this)
+        NewsApplication.INSTANCE.appComponent.inject(this)
         super.onCreate(savedInstanceState)
     }
 

@@ -8,22 +8,28 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.github.terrakok.cicerone.Router
 import com.startandroid.newsapp.R
+import com.startandroid.newsapp.data.application.NewsApplication
+import com.startandroid.newsapp.data.application.Screens
 import com.startandroid.newsapp.data.model.StoriesNewsItem
 import com.startandroid.newsapp.databinding.FrTopStoriesBinding
-import com.startandroid.newsapp.ui.main.MainContract
 import com.startandroid.newsapp.ui.topstories.ItemForTopStories
 import com.startandroid.newsapp.ui.topstories.adapter.TopStoriesAdapter
-import com.startandroid.newsapp.ui.topstories.di.DaggerTopStoriesComponent
 import com.startandroid.newsapp.ui.topstories.factory.TopStoriesViewModelFactory
 import com.startandroid.newsapp.ui.topstories.viewmodel.TopStoriesViewModel
 import com.startandroid.newsapp.utils.Status
+import kotlinx.coroutines.InternalCoroutinesApi
 import javax.inject.Inject
 
+@InternalCoroutinesApi
 class TopStoriesFragment : Fragment(R.layout.fr_top_stories), ItemForTopStories {
 
     private var bind: FrTopStoriesBinding? = null
     private val binding get() = bind!!
+
+    @Inject
+    lateinit var router: Router
 
     @Inject
     lateinit var topStoriesViewModelFactory: TopStoriesViewModelFactory
@@ -32,10 +38,7 @@ class TopStoriesFragment : Fragment(R.layout.fr_top_stories), ItemForTopStories 
     private lateinit var topStoriesAdapter: TopStoriesAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        val daggerTopStoriesComponent = DaggerTopStoriesComponent
-            .builder()
-            .build()
-        daggerTopStoriesComponent.injectTopStoriesFragment(this)
+        NewsApplication.INSTANCE.appComponent.inject(this)
         super.onCreate(savedInstanceState)
     }
 
@@ -56,15 +59,17 @@ class TopStoriesFragment : Fragment(R.layout.fr_top_stories), ItemForTopStories 
         }
 
         val layoutManager = LinearLayoutManager(binding.rvListTopStories.context, RecyclerView.VERTICAL, false)
-        binding.rvListTopStories.layoutManager = layoutManager
         topStoriesAdapter = TopStoriesAdapter(arrayListOf(), this)
-        binding.rvListTopStories.addItemDecoration(
-            DividerItemDecoration(
-                binding.rvListTopStories.context,
-                (binding.rvListTopStories.layoutManager as LinearLayoutManager).orientation
+        binding.apply {
+            rvListTopStories.layoutManager = layoutManager
+            rvListTopStories.addItemDecoration(
+                DividerItemDecoration(
+                    rvListTopStories.context,
+                    (rvListTopStories.layoutManager as LinearLayoutManager).orientation
+                )
             )
-        )
-        binding.rvListTopStories.adapter = topStoriesAdapter
+            rvListTopStories.adapter = topStoriesAdapter
+        }
     }
 
     private fun setupObserver() {
@@ -82,9 +87,7 @@ class TopStoriesFragment : Fragment(R.layout.fr_top_stories), ItemForTopStories 
     }
 
     override fun openItemMoreDetails(storiesNewsItem: StoriesNewsItem) {
-        val fm = parentFragment?.childFragmentManager
-        fm?.saveFragmentInstanceState(this)
-        (requireActivity() as MainContract).openTopStoriesMoreFragment(storiesNewsItem)
+        router.navigateTo(Screens.MoreItemScreen(storiesNewsItem))
     }
 
     override fun onDestroyView() {

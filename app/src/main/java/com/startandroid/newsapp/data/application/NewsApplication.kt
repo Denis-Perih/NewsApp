@@ -1,26 +1,23 @@
 package com.startandroid.newsapp.data.application
 
-import com.startandroid.newsapp.data.application.di.NewsAppApplicationComponent
-import com.startandroid.newsapp.data.application.di.DaggerNewsAppApplicationComponent
-import com.startandroid.newsapp.data.api.states.di.ApplicationContextModule
-import android.app.Activity
 import android.app.Application
+import com.startandroid.newsapp.data.api.states.di.ApplicationContextModule
 
 class NewsApplication : Application() {
-    var newsAppApplicationComponent: NewsAppApplicationComponent? = null
+
+    lateinit var appComponent: NewsAppApplicationComponent
         private set
 
     override fun onCreate() {
         super.onCreate()
-        newsAppApplicationComponent = DaggerNewsAppApplicationComponent
+        INSTANCE = this
+        appComponent = DaggerNewsAppApplicationComponent
             .builder()
             .applicationContextModule(ApplicationContextModule(this))
             .build()
     }
 
     companion object {
-        operator fun get(activity: Activity): NewsApplication {
-            return activity.application as NewsApplication
-        }
+        lateinit var INSTANCE: NewsApplication
     }
 }
