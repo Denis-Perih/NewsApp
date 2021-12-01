@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../layout/custom_preview.xml" value="0.2462962962962963" />
         <entry key="app/src/main/res/drawable/btn_sign_in_enter_name_focused.xml" value="0.2" />
         <entry key="app/src/main/res/drawable/btn_sign_in_enter_name_pressed.xml" value="0.2" />
         <entry key="app/src/main/res/drawable/btn_splash_focused.xml" value="0.2" />
@@ -21,6 +22,7 @@
         <entry key="app/src/main/res/layout/fr_tab2.xml" value="0.177734375" />
         <entry key="app/src/main/res/layout/fr_tab3.xml" value="0.177734375" />
         <entry key="app/src/main/res/layout/fr_using_flow.xml" value="0.2152777777777778" />
+        <entry key="app/src/main/res/layout/item_most_popular.xml" value="0.1875" />
         <entry key="app/src/main/res/layout/item_tab1.xml" value="0.177734375" />
         <entry key="app/src/main/res/layout/item_tab_1.xml" value="0.177734375" />
         <entry key="app/src/main/res/layout/item_tab_1_2.xml" value="0.21691225000120953" />

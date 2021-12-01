@@ -7,6 +7,8 @@ import com.startandroid.newsapp.data.model.PopularNews
 import com.startandroid.newsapp.data.model.PopularNewsItem
 import com.startandroid.newsapp.databinding.ItemMostPopularBinding
 import com.startandroid.newsapp.ui.mostpopular.ItemForMostPopular
+import com.startandroid.newsapp.utils.extensions.inflateViewBinding
+import com.startandroid.newsapp.utils.extensions.viewBinding
 
 class MostPopularAdapter(
     private var blockNewsData: List<PopularNewsItem>,
@@ -19,7 +21,8 @@ class MostPopularAdapter(
     ) : RecyclerView.ViewHolder(itemMostPopularBinding.root) {
         fun bind(popularNewsItem: PopularNewsItem) {
             itemMostPopularBinding.tvTitleItem.text = popularNewsItem.title
-            itemMostPopularBinding.tvPublishedDateItem.text = popularNewsItem.published_date?.substring(0, 10)
+            itemMostPopularBinding.tvPublishedDateItem.text =
+                popularNewsItem.published_date?.substring(0, 10)
             itemMostPopularBinding.tvSourceItem.text = popularNewsItem.source
             itemMostPopularBinding.cvItemTabOneTwo.setOnClickListener {
                 // add answer for details
@@ -29,9 +32,11 @@ class MostPopularAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MostPopularHolder {
-        val itemMostPopularBinding =
-            ItemMostPopularBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return MostPopularHolder(itemMostPopularBinding, itemForMostPopular)
+//        val itemMostPopularBinding = parent.inflateViewBinding<ItemMostPopularBinding>()
+        return MostPopularHolder(
+            parent.viewBinding(ItemMostPopularBinding::inflate),
+            itemForMostPopular
+        )
     }
 
     override fun onBindViewHolder(holder: MostPopularHolder, position: Int) {
