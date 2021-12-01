@@ -6,27 +6,34 @@ import android.os.Bundle
 import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
+import com.github.terrakok.cicerone.NavigatorHolder
+import com.github.terrakok.cicerone.Router
+import com.github.terrakok.cicerone.androidx.AppNavigator
 import com.startandroid.newsapp.R
-import com.startandroid.newsapp.data.model.PopularNewsItem
-import com.startandroid.newsapp.data.model.StoriesNewsItem
+import com.startandroid.newsapp.data.application.NewsApplication
+import com.startandroid.newsapp.data.application.Screens
 import com.startandroid.newsapp.databinding.ActivityMainBinding
-import com.startandroid.newsapp.ui.home.HomeFragment
-import com.startandroid.newsapp.ui.more.MoreItemFragment
-import com.startandroid.newsapp.ui.signin.view.SignInFragment
-import com.startandroid.newsapp.ui.splash.SplashFragment
 import com.startandroid.newsapp.utils.IOnBackPressed
 import kotlinx.coroutines.InternalCoroutinesApi
+import javax.inject.Inject
 
 @InternalCoroutinesApi
 @RequiresApi(Build.VERSION_CODES.M)
-class MainActivity : AppCompatActivity(), MainContract {
+class MainActivity : AppCompatActivity() {
 
     private var bind: ActivityMainBinding? = null
     private val binding get() = bind!!
 
+    @Inject
+    lateinit var router: Router
+
+    @Inject
+    lateinit var navigatorHolder: NavigatorHolder
+
+    private val navigator =  AppNavigator(this, R.id.mainFragmentContainer)
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        NewsApplication.INSTANCE.appComponent.inject(this)
         super.onCreate(savedInstanceState)
 
         bind = ActivityMainBinding.inflate(layoutInflater)
@@ -42,6 +49,11 @@ class MainActivity : AppCompatActivity(), MainContract {
         }
 
         startApp()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        navigatorHolder.setNavigator(navigator)
     }
 
     override fun onBackPressed() {
@@ -74,62 +86,15 @@ class MainActivity : AppCompatActivity(), MainContract {
     fun startApp() = if (isNetConnected()) {
         binding.srlNoNetConnection.visibility = View.INVISIBLE
         binding.mainFragmentContainer.visibility = View.VISIBLE
-        openSimpleFragment(SplashFragment())
+        router.newRootScreen(Screens.SplashScreen())
     } else {
         binding.mainFragmentContainer.visibility = View.INVISIBLE
         binding.srlNoNetConnection.visibility = View.VISIBLE
     }
 
-    private fun openSimpleFragment(newFragment: Fragment) {
-        val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
-            .setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
-            .replace(R.id.mainFragmentContainer, newFragment, newFragment::class.java.simpleName)
-            .addToBackStack(newFragment::class.java.simpleName)
-
-        transaction.commit()
-    }
-
-    private fun openMoreFragment(newFragment: Fragment) {
-        val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
-            .setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
-            .add(R.id.mainFragmentContainer, newFragment, newFragment::class.java.simpleName)
-            .addToBackStack(newFragment::class.java.simpleName)
-
-        transaction.commit()
-    }
-
-    override fun openHomeFragment() {
-        openSimpleFragment(HomeFragment())
-    }
-
-    override fun openSignInFragment() {
-        openSimpleFragment(SignInFragment())
-    }
-
-    override fun noNetConnected() {
-        binding.mainFragmentContainer.visibility = View.INVISIBLE
-        binding.srlNoNetConnection.visibility = View.VISIBLE
-    }
-
-    override fun openPopularNewsMoreFragment(popularNewsItem: PopularNewsItem) {
-
-        val bundle = Bundle()
-        bundle.putParcelable("popularNewsItem", popularNewsItem)
-
-        val fragment: Fragment = MoreItemFragment()
-        fragment.arguments = bundle
-
-        openMoreFragment(fragment)
-    }
-
-    override fun openTopStoriesMoreFragment(storiesNewsItem: StoriesNewsItem) {
-        val bundle = Bundle()
-        bundle.putParcelable("storiesNewsItem", storiesNewsItem)
-
-        val fragment: Fragment = MoreItemFragment()
-        fragment.arguments = bundle
-
-        openMoreFragment(fragment)
+    override fun onPause() {
+        navigatorHolder.removeNavigator()
+        super.onPause()
     }
 
     override fun onDestroy() {

@@ -1,6 +1,5 @@
 package com.startandroid.newsapp.ui.topstories.factory
 
-import android.net.ConnectivityManager
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.startandroid.newsapp.data.repository.repositorytopstories.TopStoriesRepositoryImpl

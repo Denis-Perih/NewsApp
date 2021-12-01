@@ -1,6 +1,5 @@
 package com.startandroid.newsapp.ui.mostpopular.factory
 
-import android.net.ConnectivityManager
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.startandroid.newsapp.data.repository.repositorymostpopular.MostPopularRepositoryImpl

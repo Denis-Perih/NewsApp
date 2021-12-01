@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.github.terrakok.cicerone.Router
 import com.startandroid.newsapp.data.model.HistoryStockItem
 import com.startandroid.newsapp.data.repository.repositoryhistorystock.HistoryStockRepository
 import com.startandroid.newsapp.utils.Result
@@ -18,7 +19,10 @@ import java.util.*
 import javax.inject.Inject
 
 @ObsoleteCoroutinesApi
-class HistoryStockViewModel (private val repository: HistoryStockRepository) : ViewModel() {
+class HistoryStockViewModel(
+    private val repository: HistoryStockRepository,
+    private val router: Router
+) : ViewModel() {
 
     private val historyLiveData = MutableLiveData<Result<HistoryStockItem>>()
 
@@ -52,7 +56,7 @@ class HistoryStockViewModel (private val repository: HistoryStockRepository) : V
             try {
                 val historyStockData = repository.getHistoryStock(date)
                 historyLiveData.postValue(Result.successData(historyStockData.dataset_data))
-            }catch (ex: NetworkErrorException){
+            } catch (ex: NetworkErrorException) {
                 historyLiveData.postValue(Result.errorData(null))
             }
         }
